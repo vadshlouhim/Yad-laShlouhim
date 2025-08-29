@@ -69,6 +69,12 @@ export const PurchaseModal = ({ posterId, posterImage, posterTitle, priceLabel, 
               organization: formData.organization.trim() || null,
               notes: formData.notes.trim() || null,
             }
+          })
+        });
+      } catch (error) {
+        console.log('Netlify function failed, trying Supabase edge function...');
+      }
+      
       const result = await createCheckoutSession(posterId, {
         customer_name: formData.customer_name.trim(),
         customer_email: formData.customer_email.trim(),
