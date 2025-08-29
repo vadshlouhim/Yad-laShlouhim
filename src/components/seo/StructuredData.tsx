@@ -251,26 +251,6 @@ export const StructuredData = ({ type, data }: StructuredDataProps) => {
             },
             knowsAbout: data.services || [
               'Design graphique',
-              'Affiches communautaires', 
-              'Événements juifs',
-              'Templates Canva',
-              'Communication visuelle'
-            ],
-            ...data
-          } as OrganizationSchema;
-
-        case 'breadcrumb':
-          return {
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: data.items.map((item: any, index: number) => ({
-              '@type': 'ListItem',
-              position: index + 1,
-              name: item.name,
-              item: item.url ? `${baseUrl}${item.url}` : undefined
-            }))
-          } as BreadcrumbSchema;
-
         case 'faq':
           return {
             '@context': 'https://schema.org',
