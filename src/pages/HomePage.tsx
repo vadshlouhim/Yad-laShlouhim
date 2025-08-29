@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Send, Mail, Phone, MapPin, ShoppingBag, Eye, Star, Moon, Calendar, Heart, GraduationCap, Sparkles, ArrowRight, ExternalLink, PartyPopper, Zap, BookOpen, Users, Gift, FileText, Crown, Music, Folder } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Send, Mail, Phone, MapPin, ShoppingBag, Eye, Star, Moon, Calendar, Heart, GraduationCap, Sparkles, ArrowRight, ExternalLink, PartyPopper, Zap, BookOpen, Users, Gift, FileText, Crown, Music, Folder, Magnet } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Container } from '../components/ui/Container';
 import { Button } from '../components/ui/Button';
