@@ -18,8 +18,8 @@ export const AdminGate = ({ onAuthenticated, onClose }: AdminGateProps) => {
     setIsLoading(true);
     setError('');
 
-    // Simple password check (remplacez par votre mot de passe admin)
-    const adminPassword = 'Jordanvanves'; // Mot de passe admin personnalisé
+    // Simple password check
+    const adminPassword = 'admin123'; // Mot de passe admin simplifié
     
     if (password === adminPassword) {
       sessionStorage.setItem('admin_authenticated', 'true');

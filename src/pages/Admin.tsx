@@ -27,11 +27,13 @@ export const Admin = () => {
 
   useEffect(() => {
     // Check if already authenticated
-    if (sessionStorage.getItem('admin_authenticated')) {
+    const isAuth = sessionStorage.getItem('admin_authenticated');
+    console.log('Admin auth check:', isAuth);
+    
+    if (isAuth === 'true') {
       setIsAuthenticated(true);
     } else {
-      // Redirect to home if not authenticated
-      window.location.href = '/';
+      setIsAuthenticated(false);
     }
   }, []);
 
@@ -113,7 +115,13 @@ export const Admin = () => {
   };
 
   if (!isAuthenticated) {
-    return null; // Will redirect to home
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <AdminGate 
+          onAuthenticated={() => setIsAuthenticated(true)}
+        />
+      </div>
+    );
   }
 
   return (
