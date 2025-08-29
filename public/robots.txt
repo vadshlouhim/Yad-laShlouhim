@@ -1,0 +1,37 @@
+User-agent: *
+Allow: /
+
+# Pages importantes pour l'indexation
+Allow: /news
+Allow: /faq
+Allow: /news/*
+
+# Bloquer les pages d'administration
+Disallow: /admin
+Disallow: /admin/*
+
+# Bloquer les pages de processus de paiement (privées)
+Disallow: /achat/succes
+Disallow: /achat/annule
+
+# Bloquer les fichiers et dossiers techniques
+Disallow: /_next/
+Disallow: /api/
+Disallow: /.netlify/
+
+# Autoriser les ressources statiques
+Allow: /assets/
+Allow: /images/
+Allow: *.css
+Allow: *.js
+Allow: *.png
+Allow: *.jpg
+Allow: *.jpeg
+Allow: *.gif
+Allow: *.svg
+Allow: *.webp
+
+# Sitemap
+
+# Délai entre les requêtes (recommandé pour les gros bots)
+Crawl-delay: 1
