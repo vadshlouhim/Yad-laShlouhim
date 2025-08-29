@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X, ShoppingBag, Info, Mail, Phone, Building2, FileText } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { createCheckoutSession } from '../../utils/stripe';
 
 interface PurchaseModalProps {
   posterId: string;
@@ -70,43 +71,25 @@ export const PurchaseModal = ({ posterId, posterImage, posterTitle, priceLabel, 
             }
           })
         });
-      } catch (netlifyError) {
+      } catch (error) {
         console.log('Netlify function failed, trying Supabase edge function...');
-        
-        // Fallback to Supabase edge function
-        checkoutResponse = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-poster-checkout`, {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
-          },
-          body: JSON.stringify({ 
-            posterId,
-            customerData: {
-              customer_name: formData.customer_name.trim(),
-              customer_email: formData.customer_email.trim(),
-              phone: formData.phone.trim() || null,
-              organization: formData.organization.trim() || null,
-              notes: formData.notes.trim() || null,
-            }
-          })
-        });
       }
       
-      console.log('📡 Réponse checkout:', checkoutResponse.status);
+      const result = await createCheckoutSession(posterId, {
+        customer_name: formData.customer_name.trim(),
+        customer_email: formData.customer_email.trim(),
+        phone: formData.phone.trim() || null,
+        organization: formData.organization.trim() || null,
+        notes: formData.notes.trim() || null,
+      });
       
-      if (!checkoutResponse.ok) {
-        const errorData = await checkoutResponse.json();
-        console.error('❌ Erreur checkout:', errorData);
-        throw new Error(errorData.error || `Erreur HTTP ${checkoutResponse.status}`);
+      if (result.error) {
+        throw new Error(result.error);
       }
       
-      const checkoutData = await checkoutResponse.json();
-      console.log('✅ Checkout créé:', checkoutData);
-      
-      if (checkoutData.url) {
-        console.log('🚀 Redirection vers Stripe:', checkoutData.url);
-        window.location.href = checkoutData.url;
+      if (result.url) {
+        console.log('🚀 Redirection vers Stripe:', result.url);
+        window.location.href = result.url;
       } else {
         throw new Error('URL de checkout manquante');
       }
