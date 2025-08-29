@@ -37,6 +37,10 @@ export const SuccessPanel = ({ purchase, sessionId }: SuccessPanelProps) => {
       let response;
       try {
         response = await fetch('/.netlify/functions/sendPurchaseEmail', {
+        });
+      } catch (error) {
+        console.error('Netlify function failed:', error);
+      }
 
       const success = await sendPurchaseEmail(sessionId);
       
