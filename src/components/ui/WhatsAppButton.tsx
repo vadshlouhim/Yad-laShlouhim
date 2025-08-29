@@ -96,6 +96,13 @@ export const WhatsAppButton = () => {
         {!isOpen && (
           <div className="absolute inset-0 w-14 h-14 bg-green-400 rounded-full animate-ping opacity-20" />
         )}
+
+        {/* Zone de clic invisible par-dessus l'animation */}
+        <div 
+          className="absolute inset-0 w-14 h-14 rounded-full z-10 cursor-pointer"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Contact WhatsApp"
+        />
       </div>
     </>
   );
