@@ -217,6 +217,18 @@ export const StructuredData = ({ type, data }: StructuredDataProps) => {
             ]
           } as ProductSchema;
 
+        case 'breadcrumb':
+          return {
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: data.items.map((item: any, index: number) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              name: item.name,
+              item: item.url ? `${baseUrl}${item.url}` : undefined
+            }))
+          } as BreadcrumbSchema;
+
         case 'faq':
           return {
             '@context': 'https://schema.org',
