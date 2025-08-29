@@ -179,8 +179,8 @@ export const FAQ = () => {
     <>
       <SEOHead
         title="FAQ - Questions fréquentes sur nos affiches Canva - Yad La'Shlouhim"
-        description="Trouvez toutes les réponses à vos questions sur l'achat, la personnalisation et l'utilisation de nos modèles d'affiches Canva. Support client disponible 24h/24."
-        keywords="FAQ, questions fréquentes, aide, support, canva, affiches, paiement, personnalisation, livraison"
+        description="❓ Toutes vos questions sur nos templates Canva : achat, personnalisation, livraison. 🎯 Réponses détaillées + support 24h/24. ✅ Guide complet d'utilisation."
+        keywords="FAQ, questions fréquentes, aide, support, canva, affiches, paiement, personnalisation, livraison, templates, modèles, design, communauté juive, événements, prix, utilisation"
         url={typeof window !== 'undefined' ? window.location.href : undefined}
       />
       

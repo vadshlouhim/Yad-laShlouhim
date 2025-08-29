@@ -69,6 +69,11 @@ export const SEOHead = ({
     updateMetaTag('keywords', keywords);
     updateMetaTag('author', author);
     updateMetaTag('robots', noindex ? 'noindex, nofollow' : 'index, follow');
+    updateMetaTag('generator', 'Yad La\'Shlouhim - React + Vite');
+    updateMetaTag('application-name', 'Yad La\'Shlouhim');
+    updateMetaTag('theme-color', '#3B82F6');
+    updateMetaTag('msapplication-TileColor', '#3B82F6');
+    updateMetaTag('apple-mobile-web-app-title', 'Yad La\'Shlouhim');
 
     // Open Graph
     updateMetaTag('og:title', title, true);
@@ -78,12 +83,18 @@ export const SEOHead = ({
     updateMetaTag('og:type', type, true);
     updateMetaTag('og:site_name', 'Yad La\'Shlouhim', true);
     updateMetaTag('og:locale', 'fr_FR', true);
+    updateMetaTag('og:image:width', '1200', true);
+    updateMetaTag('og:image:height', '630', true);
+    updateMetaTag('og:image:alt', 'Logo Yad La\'Shlouhim - Affiches communautaires juives', true);
 
     // Twitter Card
     updateMetaTag('twitter:card', 'summary_large_image');
     updateMetaTag('twitter:title', title);
     updateMetaTag('twitter:description', description);
     updateMetaTag('twitter:image', image);
+    updateMetaTag('twitter:image:alt', 'Logo Yad La\'Shlouhim - Affiches communautaires juives');
+    updateMetaTag('twitter:site', '@YadLaShlouhim');
+    updateMetaTag('twitter:creator', '@YadLaShlouhim');
 
     // Meta tags spécifiques aux articles
     if (type === 'article') {

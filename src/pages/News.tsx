@@ -149,8 +149,8 @@ export const News = () => {
     <>
       <SEOHead
         title="Actualités & Paracha de la semaine - Yad La'Shlouhim"
-        description="Découvrez notre actualité hebdomadaire : paracha, dvar Torah, événements communautaires et fêtes juives. Enrichissez votre pratique spirituelle."
-        keywords="paracha semaine, dvar torah, actualités juives, événements communautaires, fêtes juives, spiritualité"
+        description="📖 Paracha hebdomadaire, Dvar Torah et actualités de la communauté juive. 🕯️ Enrichissez votre spiritualité avec nos articles inspirants. 📅 Événements Paris."
+        keywords="paracha semaine, dvar torah, actualités juives, événements communautaires, fêtes juives, spiritualité, torah, judaisme, communauté paris, enseignements religieux, chabbat, synagogue"
         url={typeof window !== 'undefined' ? window.location.href : undefined}
       />
       

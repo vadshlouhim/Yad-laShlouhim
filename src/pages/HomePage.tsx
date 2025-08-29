@@ -290,20 +290,58 @@ export const HomePage = () => {
     <>
       <SEOHead
         title="Yad La'Shlouhim - Affiches Communautaires Juives Design"
-        description="Templates Canva professionnels pour vos événements, invitations Shabbat, fêtes juives et annonces communautaires. Personnalisation facile et accès immédiat."
-        keywords="affiches juives, templates canva, événements communautaires, shabbat, fêtes juives, invitations, design, personnalisation, communauté juive, paris"
+        description="🎨 Templates Canva professionnels pour événements juifs : Shabbat, fêtes, Bar Mitzvah. ⚡ Accès immédiat, personnalisation facile. 📍 Communauté juive Paris & France."
+        keywords="affiches juives, templates canva, événements communautaires, shabbat, fêtes juives, invitations, design, personnalisation, communauté juive, paris, bar mitzvah, roch hachana, kippour, hanoucca, pessah, pourim, lag baomer, chavouot, souccot"
         url={typeof window !== 'undefined' ? window.location.href : undefined}
       />
       
       <StructuredData
         type="organization"
-        data={{}}
+        data={{
+          services: [
+            "Templates d'affiches Canva",
+            "Design graphique communautaire", 
+            "Personnalisation d'événements juifs",
+            "Communication visuelle religieuse"
+          ]
+        }}
       />
       
       <StructuredData
         type="website"
-        data={{}}
+        data={{
+          searchAction: true,
+          mainEntity: {
+            "@type": "ItemList",
+            "name": "Catégories d'affiches",
+            "numberOfItems": categories.length,
+            "itemListElement": categories.slice(0, 5).map((category, index) => ({
+              "@type": "Thing",
+              "position": index + 1,
+              "name": category.name,
+              "url": `https://yad-lashlouhim.com/#${category.slug}`
+            }))
+          }
+        }}
       />
+
+      {/* Schema pour les produits/affiches */}
+      {featuredPosters.length > 0 && (
+        <StructuredData
+          type="product"
+          data={{
+            name: "Collection d'affiches communautaires juives",
+            description: "Templates Canva professionnels pour tous vos événements communautaires",
+            image: featuredPosters[0]?.image_url,
+            price_cents: 3800, // Prix moyen
+            currency: "EUR",
+            url: "https://yad-lashlouhim.com/",
+            brand: "Yad La'Shlouhim",
+            category: "Design graphique",
+            availability: "InStock"
+          }}
+        />
+      )}
 
       <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
       

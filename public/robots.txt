@@ -32,6 +32,12 @@ Allow: *.svg
 Allow: *.webp
 
 # Sitemap
+Sitemap: https://yad-lashlouhim.com/sitemap.xml
 
 # Délai entre les requêtes (recommandé pour les gros bots)
 Crawl-delay: 1
+
+# Informations supplémentaires pour les moteurs de recherche
+# Site principal pour affiches communautaires juives
+# Contact: Yad-lashlouhim770@gmail.com
+# Téléphone: +33 6 67 28 88 51

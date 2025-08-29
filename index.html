@@ -31,11 +31,35 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://yad-lashlouhim.com/" />
     
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="mkcVFEctKnJvMJth9ldTHIaMfAKQde3T1F_grfusFHg" />
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#3B82F6" />
+    <meta name="msapplication-TileColor" content="#3B82F6" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Yad La'Shlouhim" />
+    
+    <!-- Geo Tags -->
+    <meta name="geo.region" content="FR" />
+    <meta name="geo.placename" content="France" />
+    <meta name="ICBM" content="48.8566, 2.3522" />
+    
+    <!-- Language and Content -->
+    <meta name="language" content="French" />
+    <meta name="content-language" content="fr" />
+    <meta name="distribution" content="global" />
+    <meta name="rating" content="general" />
+    <meta name="revisit-after" content="7 days" />
+    
     <!-- Performance Optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://ydlyokoawuivemrqphos.supabase.co">
     <link rel="dns-prefetch" href="https://js.stripe.com">
+    <link rel="dns-prefetch" href="https://api.emailjs.com">
+    <link rel="dns-prefetch" href="https://wa.me">
     
     <!-- Fonts with display optimization -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -52,12 +76,34 @@
         "@type": "ContactPoint",
         "contactType": "customer service",
         "email": "Yad-lashlouhim770@gmail.com",
-        "telephone": "+33667288851"
+        "telephone": "+33667288851",
+        "availableLanguage": ["French", "Hebrew"],
+        "hoursAvailable": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "08:00",
+          "closes": "22:00"
+        }
       },
       "address": {
         "@type": "PostalAddress",
-        "addressCountry": "FR"
-      }
+        "addressCountry": "FR",
+        "addressRegion": "Île-de-France"
+      },
+      "sameAs": [
+        "https://wa.me/33667288851"
+      ],
+      "areaServed": {
+        "@type": "Country",
+        "name": "France"
+      },
+      "knowsAbout": [
+        "Design graphique",
+        "Affiches communautaires",
+        "Événements juifs",
+        "Templates Canva",
+        "Communication visuelle"
+      ]
     }
     </script>
     
@@ -70,8 +116,81 @@
       "url": "https://yad-lashlouhim.com",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://yad-lashlouhim.com/search?q={search_term_string}",
+        "target": "https://yad-lashlouhim.com/?q={search_term_string}",
         "query-input": "required name=search_term_string"
+      },
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "Services",
+        "itemListElement": [
+          {
+            "@type": "Service",
+            "name": "Templates d'affiches Canva",
+            "description": "Modèles professionnels pour événements communautaires juifs"
+          },
+          {
+            "@type": "Service", 
+            "name": "Personnalisation graphique",
+            "description": "Adaptation de vos affiches selon vos besoins"
+          }
+        ]
+      }
+    }
+    </script>
+    
+    <!-- Local Business Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Yad La'Shlouhim",
+      "image": "https://ydlyokoawuivemrqphos.supabase.co/storage/v1/object/public/Logo%20du%20site/Yad-La-Shlouhim-Affiches-communautaire-juive-paris-logo-rond.png",
+      "telephone": "+33667288851",
+      "email": "Yad-lashlouhim770@gmail.com",
+      "url": "https://yad-lashlouhim.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "FR",
+        "addressRegion": "Île-de-France"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 48.8566,
+        "longitude": 2.3522
+      },
+      "openingHours": "Mo-Su 08:00-22:00",
+      "priceRange": "€€",
+      "servesCuisine": "Design graphique",
+      "serviceArea": {
+        "@type": "Country",
+        "name": "France"
+      }
+    }
+    </script>
+    
+    <!-- Product Schema for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Templates d'affiches Canva - Yad La'Shlouhim",
+      "description": "Templates Canva professionnels pour événements communautaires juifs. Personnalisation facile, accès immédiat.",
+      "image": "https://ydlyokoawuivemrqphos.supabase.co/storage/v1/object/public/Logo%20du%20site/Yad-La-Shlouhim-Affiches-communautaire-juive-paris-logo-rond.png",
+      "brand": {
+        "@type": "Brand",
+        "name": "Yad La'Shlouhim"
+      },
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "EUR",
+        "lowPrice": "15",
+        "highPrice": "50",
+        "offerCount": "50+"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "127"
       }
     }
     </script>

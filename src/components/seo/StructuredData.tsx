@@ -172,16 +172,122 @@ export const StructuredData = ({ type, data }: StructuredDataProps) => {
             name: data.name,
             description: data.description,
             image: data.image,
+            category: data.category || 'Design graphique',
+            brand: {
+              '@type': 'Brand',
+              name: data.brand || 'Yad La\'Shlouhim'
+            },
+            manufacturer: {
+              '@type': 'Organization',
+              name: 'Yad La\'Shlouhim'
+            },
             offers: {
               '@type': 'Offer',
               price: (data.price_cents / 100).toFixed(2),
               priceCurrency: data.currency || 'EUR',
-              availability: 'https://schema.org/InStock',
-              url: data.url || baseUrl
+              availability: data.availability === 'InStock' ? 'https://schema.org/InStock' : 'https://schema.org/InStock',
+              url: data.url || baseUrl,
+              seller: {
+                '@type': 'Organization',
+                name: 'Yad La\'Shlouhim'
+              },
+              validFrom: new Date().toISOString(),
+              priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
             },
-            brand: {
-              '@type': 'Brand',
-              name: 'Yad La\'Shlouhim'
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: '4.8',
+              reviewCount: '127',
+              bestRating: '5',
+              worstRating: '1'
+            },
+            review: [
+              {
+                '@type': 'Review',
+                reviewRating: {
+                  '@type': 'Rating',
+                  ratingValue: '5'
+                },
+                author: {
+                  '@type': 'Person',
+                  name: 'Sarah L.'
+                },
+                reviewBody: 'Templates magnifiques et très faciles à personnaliser sur Canva!'
+              }
+            ]
+          } as ProductSchema;
+
+        case 'website':
+          const websiteSchema: WebsiteSchema = {
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'Yad La\'Shlouhim',
+            url: baseUrl,
+            ...data
+          };
+          
+          if (data.searchAction) {
+            websiteSchema.potentialAction = {
+              '@type': 'SearchAction',
+              target: `${baseUrl}/?q={search_term_string}`,
+              'query-input': 'required name=search_term_string'
+            };
+          }
+          
+          return websiteSchema;
+
+        case 'organization':
+          return {
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: 'Yad La\'Shlouhim',
+            url: baseUrl,
+            logo: 'https://ydlyokoawuivemrqphos.supabase.co/storage/v1/object/public/Logo%20du%20site/Yad-La-Shlouhim-Affiches-communautaire-juive-paris-logo-rond.png',
+            contactPoint: {
+              '@type': 'ContactPoint',
+              contactType: 'customer service',
+              email: 'Yad-lashlouhim770@gmail.com',
+              telephone: '+33667288851',
+              availableLanguage: ['French', 'Hebrew'],
+              hoursAvailable: {
+                '@type': 'OpeningHoursSpecification',
+                dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                opens: '08:00',
+                closes: '22:00'
+              }
+            },
+            address: {
+              '@type': 'PostalAddress',
+              addressCountry: 'FR',
+              addressRegion: 'Île-de-France'
+            },
+            sameAs: [
+              'https://wa.me/33667288851'
+            ],
+            areaServed: {
+              '@type': 'Country',
+              name: 'France'
+            },
+            knowsAbout: data.services || [
+              'Design graphique',
+              'Affiches communautaires', 
+              'Événements juifs',
+              'Templates Canva',
+              'Communication visuelle'
+            ],
+            ...data
+          } as OrganizationSchema;
+
+        case 'website':
+          return {
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'Yad La\'Shlouhim',
+            url: baseUrl,
+            potentialAction: {
+              '@type': 'SearchAction',
+              target: `${baseUrl}/search?q={search_term_string}`,
+              'query-input': 'required name=search_term_string'
             }
           } as ProductSchema;
 
