@@ -51,26 +51,60 @@ export const PurchaseModal = ({ posterId, posterImage, posterTitle, priceLabel, 
 
       console.log('💳 Création du checkout Stripe...');
       
-      // Utiliser uniquement la fonction Supabase Edge Function
-      const checkoutResponse = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-poster-checkout`, {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
-        },
-        body: JSON.stringify({ 
-          posterId,
-          customerData: {
-            customer_name: formData.customer_name.trim(),
-            customer_email: formData.customer_email.trim(),
-            phone: formData.phone.trim() || null,
-            organization: formData.organization.trim() || null,
-            notes: formData.notes.trim() || null,
-          }
-        })
-      });
+      // Essayer d'abord la fonction Netlify (plus fiable), puis Supabase en fallback
+      let checkoutResponse;
+      let usingNetlify = true;
       
-      console.log('📡 Réponse checkout:', checkoutResponse.status);
+      try {
+        console.log('🔄 Tentative avec fonction Netlify...');
+        checkoutResponse = await fetch('/.netlify/functions/createCheckout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            posterId,
+            customerData: {
+              customer_name: formData.customer_name.trim(),
+              customer_email: formData.customer_email.trim(),
+              phone: formData.phone.trim() || null,
+              organization: formData.organization.trim() || null,
+              notes: formData.notes.trim() || null,
+            }
+          })
+        });
+        
+        if (!checkoutResponse.ok) {
+          throw new Error(`Netlify function failed: ${checkoutResponse.status}`);
+        }
+        
+        console.log('✅ Fonction Netlify utilisée avec succès');
+        
+      } catch (netlifyError) {
+        console.log('⚠️ Fonction Netlify échouée, tentative Supabase...');
+        usingNetlify = false;
+        
+        // Fallback vers Supabase Edge Function
+        checkoutResponse = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-poster-checkout`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+          },
+          body: JSON.stringify({ 
+            posterId,
+            customerData: {
+              customer_name: formData.customer_name.trim(),
+              customer_email: formData.customer_email.trim(),
+              phone: formData.phone.trim() || null,
+              organization: formData.organization.trim() || null,
+              notes: formData.notes.trim() || null,
+            }
+          })
+        });
+        
+        console.log('📡 Fonction Supabase utilisée');
+      }
+      
+      console.log(`📡 Réponse checkout (${usingNetlify ? 'Netlify' : 'Supabase'}):`, checkoutResponse.status);
       
       if (!checkoutResponse.ok) {
         const errorData = await checkoutResponse.json();
@@ -93,11 +127,22 @@ export const PurchaseModal = ({ posterId, posterImage, posterTitle, priceLabel, 
       const errorMessage = error instanceof Error ? error.message : 'Une erreur inconnue est survenue';
       setError(errorMessage);
       
-      // Afficher plus de détails pour le debug
-      console.error('=== DETAILS ERREUR PAIEMENT ===');
-      console.error('Poster ID:', posterId);
-      console.error('Form Data:', formData);
-      console.error('Error object:', error);
+      // Diagnostic détaillé
+      console.error('=== DIAGNOSTIC ERREUR PAIEMENT ===');
+      console.error('🆔 Poster ID:', posterId);
+      console.error('📝 Form Data:', formData);
+      console.error('🌐 Supabase URL:', import.meta.env.VITE_SUPABASE_URL);
+      console.error('🔑 Supabase Key:', import.meta.env.VITE_SUPABASE_ANON_KEY ? 'Configurée' : 'Manquante');
+      console.error('❌ Error object:', error);
+      
+      // Suggestions de résolution
+      if (errorMessage.includes('fetch')) {
+        setError('Problème de connexion. Vérifiez votre configuration Supabase.');
+      } else if (errorMessage.includes('404')) {
+        setError('Fonction de paiement non trouvée. Les Edge Functions doivent être déployées.');
+      } else if (errorMessage.includes('401') || errorMessage.includes('403')) {
+        setError('Problème d\'authentification. Vérifiez vos clés API Supabase.');
+      }
     } finally {
       setSubmitting(false);
     }
