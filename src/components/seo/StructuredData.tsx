@@ -251,6 +251,8 @@ export const StructuredData = ({ type, data }: StructuredDataProps) => {
             },
             knowsAbout: data.services || [
               'Design graphique',
+            ]
+          }
         case 'faq':
           return {
             '@context': 'https://schema.org',
