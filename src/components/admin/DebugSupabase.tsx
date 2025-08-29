@@ -100,6 +100,63 @@ export const DebugSupabase = () => {
     }
   };
 
+  const testStripeFunction = async () => {
+    setTesting(true);
+    setResult('');
+    
+    try {
+      setResult(prev => prev + '🔍 Test de la fonction Stripe...\n');
+      
+      // Test avec des données factices
+      const testData = {
+        posterId: 'test-poster-id',
+        customerData: {
+          customer_name: 'Test User',
+          customer_email: 'test@example.com',
+          phone: null,
+          organization: null,
+          notes: null
+        }
+      };
+      
+      setResult(prev => prev + '📡 Appel de la fonction create-poster-checkout...\n');
+      
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-poster-checkout`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify(testData)
+      });
+      
+      setResult(prev => prev + `📊 Status: ${response.status}\n`);
+      
+      const responseText = await response.text();
+      setResult(prev => prev + `📋 Réponse: ${responseText}\n`);
+      
+      if (response.status === 404) {
+        setResult(prev => prev + '❌ Poster test non trouvé (normal pour un test)\n');
+      } else if (response.status === 400) {
+        setResult(prev => prev + '⚠️ Erreur de validation (normal pour un test)\n');
+      } else if (response.ok) {
+        setResult(prev => prev + '✅ Fonction Stripe fonctionne !\n');
+      } else {
+        setResult(prev => prev + `❌ Erreur inattendue: ${response.status}\n`);
+      }
+      
+      // Vérifier les variables d'environnement
+      setResult(prev => prev + '\n🔧 Vérification des variables d\'environnement...\n');
+      setResult(prev => prev + `VITE_SUPABASE_URL: ${import.meta.env.VITE_SUPABASE_URL ? '✅' : '❌'}\n`);
+      setResult(prev => prev + `VITE_SUPABASE_ANON_KEY: ${import.meta.env.VITE_SUPABASE_ANON_KEY ? '✅' : '❌'}\n`);
+      
+    } catch (error) {
+      setResult(prev => prev + `💥 Erreur: ${error}\n`);
+    } finally {
+      setTesting(false);
+    }
+  };
+
   return (
     <div className="space-y-8">
       {/* Stripe Status */}
@@ -135,6 +192,14 @@ export const DebugSupabase = () => {
             variant="outline"
           >
             {testing ? 'Test en cours...' : 'Tester la connexion'}
+          </Button>
+          
+          <Button
+            onClick={testStripeFunction}
+            disabled={testing}
+            className="bg-green-500 hover:bg-green-600 text-white"
+          >
+            {testing ? 'Test en cours...' : 'Tester Stripe'}
           </Button>
           
           <Button

@@ -51,54 +51,31 @@ export const PurchaseModal = ({ posterId, posterImage, posterTitle, priceLabel, 
 
       console.log('💳 Création du checkout Stripe...');
       
-      // Try Netlify function first, fallback to Supabase edge function
-      let checkoutResponse;
-      try {
-        checkoutResponse = await fetch('/.netlify/functions/createCheckout', {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ 
-            posterId,
-            customerData: {
-              customer_name: formData.customer_name.trim(),
-              customer_email: formData.customer_email.trim(),
-              phone: formData.phone.trim() || null,
-              organization: formData.organization.trim() || null,
-              notes: formData.notes.trim() || null,
-            }
-          })
-        });
-      } catch (netlifyError) {
-        console.log('Netlify function failed, trying Supabase edge function...');
-        
-        // Fallback to Supabase edge function
-        checkoutResponse = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-poster-checkout`, {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
-          },
-          body: JSON.stringify({ 
-            posterId,
-            customerData: {
-              customer_name: formData.customer_name.trim(),
-              customer_email: formData.customer_email.trim(),
-              phone: formData.phone.trim() || null,
-              organization: formData.organization.trim() || null,
-              notes: formData.notes.trim() || null,
-            }
-          })
-        });
-      }
+      // Utiliser uniquement la fonction Supabase Edge Function
+      const checkoutResponse = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-poster-checkout`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify({ 
+          posterId,
+          customerData: {
+            customer_name: formData.customer_name.trim(),
+            customer_email: formData.customer_email.trim(),
+            phone: formData.phone.trim() || null,
+            organization: formData.organization.trim() || null,
+            notes: formData.notes.trim() || null,
+          }
+        })
+      });
       
       console.log('📡 Réponse checkout:', checkoutResponse.status);
       
       if (!checkoutResponse.ok) {
         const errorData = await checkoutResponse.json();
         console.error('❌ Erreur checkout:', errorData);
-        throw new Error(errorData.error || `Erreur HTTP ${checkoutResponse.status}`);
+        throw new Error(errorData.error || errorData.details || `Erreur HTTP ${checkoutResponse.status}`);
       }
       
       const checkoutData = await checkoutResponse.json();
@@ -115,6 +92,12 @@ export const PurchaseModal = ({ posterId, posterImage, posterTitle, priceLabel, 
       console.error('❌ Erreur processus achat:', error);
       const errorMessage = error instanceof Error ? error.message : 'Une erreur inconnue est survenue';
       setError(errorMessage);
+      
+      // Afficher plus de détails pour le debug
+      console.error('=== DETAILS ERREUR PAIEMENT ===');
+      console.error('Poster ID:', posterId);
+      console.error('Form Data:', formData);
+      console.error('Error object:', error);
     } finally {
       setSubmitting(false);
     }
@@ -262,6 +245,18 @@ export const PurchaseModal = ({ posterId, posterImage, posterTitle, priceLabel, 
                 <strong>📧 Après paiement :</strong> Vous recevrez immédiatement un email avec votre lien Canva et votre facture.
               </p>
             </div>
+
+            {/* Debug info en développement */}
+            {import.meta.env.DEV && (
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3">
+                <p className="text-xs text-yellow-700 dark:text-yellow-300">
+                  <strong>🐛 Debug:</strong> Poster ID: {posterId}
+                </p>
+                <p className="text-xs text-yellow-700 dark:text-yellow-300">
+                  Supabase URL: {import.meta.env.VITE_SUPABASE_URL ? '✅' : '❌'}
+                </p>
+              </div>
+            )}
 
             <Button 
               type="submit" 

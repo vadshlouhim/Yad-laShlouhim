@@ -10,6 +10,7 @@ import { useAuth } from '../components/auth/AuthProvider';
 import { supabase } from '../lib/supabase';
 import { Poster, Category } from '../types';
 import { PurchaseModal } from '../components/purchase/PurchaseModal';
+import { PaymentDebug } from '../components/debug/PaymentDebug';
 
 export const HomePage = () => {
   const [posters, setPosters] = useState<Poster[]>([]);
@@ -855,6 +856,9 @@ export const HomePage = () => {
           onClose={() => setShowPurchaseModal(false)}
         />
       )}
+      
+      {/* Debug Payment - Only in development */}
+      {import.meta.env.DEV && <PaymentDebug />}
     </div>
     </>
   );
