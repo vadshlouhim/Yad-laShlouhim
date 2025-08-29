@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Settings } from 'lucide-react';
+import { Menu, X, Settings, LogIn, LogOut, User } from 'lucide-react';
 import { Container } from '../ui/Container';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { AdminGate } from '../admin/AdminGate';
+import { useAuth } from '../auth/AuthProvider';
 import { Button } from '../ui/Button';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showAdminAuth, setShowAdminAuth] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -69,6 +71,10 @@ export const Header = () => {
     navigate('/admin');
   };
 
+  const handleSignOut = async () => {
+    await signOut();
+    setIsMenuOpen(false);
+  };
 
   return (
     <>
@@ -112,6 +118,36 @@ export const Header = () => {
             {/* Desktop Actions */}
             <div className="hidden md:flex items-center gap-4">
               <ThemeToggle />
+              
+              {user ? (
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    Bonjour, {user.user_metadata?.full_name || user.email}
+                  </span>
+                  <Button
+                    onClick={handleSignOut}
+                    variant="outline"
+                    size="sm"
+                    icon={LogOut}
+                  >
+                    Déconnexion
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Link to="/login">
+                    <Button variant="outline" size="sm" icon={LogIn}>
+                      Connexion
+                    </Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button size="sm" icon={User}>
+                      Inscription
+                    </Button>
+                  </Link>
+                </div>
+              )}
+              
               <button 
                 onClick={handleAdminClick}
                 className="flex items-center gap-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors duration-200"
@@ -170,6 +206,36 @@ export const Header = () => {
                 ))}
                 
                 <div className="pt-4 border-t border-gray-200 dark:border-gray-600 space-y-3">
+                  {user ? (
+                    <>
+                      <div className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400">
+                        {user.user_metadata?.full_name || user.email}
+                      </div>
+                      <button
+                        onClick={handleSignOut}
+                        className="w-full flex items-center gap-2 px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors duration-200"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Déconnexion
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                        <button className="w-full flex items-center gap-2 px-4 py-3 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200">
+                          <LogIn className="w-4 h-4" />
+                          Connexion
+                        </button>
+                      </Link>
+                      <Link to="/signup" onClick={() => setIsMenuOpen(false)}>
+                        <button className="w-full flex items-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                          <User className="w-4 h-4" />
+                          Inscription
+                        </button>
+                      </Link>
+                    </>
+                  )}
+                  
                   <button 
                     onClick={handleAdminClick}
                     className="w-full flex items-center gap-2 px-4 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors duration-200"
