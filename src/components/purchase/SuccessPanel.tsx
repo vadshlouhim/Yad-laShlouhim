@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ExternalLink, Copy, Mail, Receipt, CheckCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { PurchaseResponse } from '../../types';
+import { sendPurchaseEmail } from '../../utils/stripe';
 
 interface SuccessPanelProps {
   purchase: PurchaseResponse;
@@ -36,32 +37,21 @@ export const SuccessPanel = ({ purchase, sessionId }: SuccessPanelProps) => {
       let response;
       try {
         response = await fetch('/.netlify/functions/sendPurchaseEmail', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sessionId })
         });
-      } catch (netlifyError) {
-        console.log('Netlify function failed, trying Supabase edge function...');
-        
-        response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-purchase-email`, {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
-          },
-          body: JSON.stringify({ sessionId })
-        });
+      } catch (error) {
+        console.error('Netlify function failed:', error);
       }
 
-      if (response.ok) {
+      const success = await sendPurchaseEmail(sessionId);
+      
+      if (success) {
         setEmailSent(true);
       } else {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Email sending failed');
+        throw new Error('Email sending failed');
       }
     } catch (error) {
       console.error('Email sending failed:', error);
-      alert(`Erreur lors de l'envoi de l'email: ${error.message}`);
+      alert(`Erreur lors de l'envoi de l'email: ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
     } finally {
       setIsLoadingEmail(false);
     }
