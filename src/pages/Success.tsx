@@ -26,27 +26,7 @@ export const Success = () => {
 
   const loadPurchase = async (sessionId: string) => {
     try {
-
-
       const data = await getPurchaseBySession(sessionId);
-      setPurchase(data);
-    } catch (error) {
-      console.error('Error loading purchase:', error);
-      setError('Achat non trouvé ou erreur de chargement');
-    } finally {
-      setLoading(false);
-    }
-  };
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId })
-      });
-
-      if (!response.ok) {
-        throw new Error('Purchase not found');
-      }
-
-      const data = await response.json();
       setPurchase(data);
     } catch (error) {
       console.error('Error loading purchase:', error);
