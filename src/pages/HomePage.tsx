@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Send, Mail, Phone, MapPin, ShoppingBag, Eye, Star, Moon, Calendar, Heart, GraduationCap, Sparkles, ArrowRight, ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Send, Mail, Phone, MapPin, ShoppingBag, Eye, Star, Moon, Calendar, Heart, GraduationCap, Sparkles, ArrowRight, ExternalLink, PartyPopper, Zap, BookOpen, Users, Gift, FileText, Crown, Music, Folder } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Container } from '../components/ui/Container';
 import { Button } from '../components/ui/Button';
@@ -237,36 +237,52 @@ export const HomePage = () => {
 
   // Fonction pour obtenir l'icône et la couleur d'une catégorie
   const getCategoryIcon = (iconName: string, isSelected: boolean) => {
-    const iconMap: Record<string, { icon: any, color: string }> = {
-      'Star': { 
-        icon: Star, 
-        color: isSelected ? 'bg-gradient-to-r from-yellow-500 to-orange-500' : 'bg-gradient-to-r from-yellow-400 to-orange-400'
-      },
-      'Moon': { 
-        icon: Moon, 
-        color: isSelected ? 'bg-gradient-to-r from-indigo-500 to-purple-600' : 'bg-gradient-to-r from-indigo-400 to-purple-500'
-      },
-      'Calendar': { 
-        icon: Calendar, 
-        color: isSelected ? 'bg-gradient-to-r from-blue-500 to-cyan-500' : 'bg-gradient-to-r from-blue-400 to-cyan-400'
-      },
-      'Heart': { 
-        icon: Heart, 
-        color: isSelected ? 'bg-gradient-to-r from-red-500 to-pink-500' : 'bg-gradient-to-r from-red-400 to-pink-400'
-      },
-      'GraduationCap': { 
-        icon: GraduationCap, 
-        color: isSelected ? 'bg-gradient-to-r from-green-500 to-emerald-500' : 'bg-gradient-to-r from-green-400 to-emerald-400'
-      },
-      'Sparkles': { 
-        icon: Sparkles, 
-        color: isSelected ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-gradient-to-r from-purple-400 to-pink-400'
-      }
+    // Couleurs harmonieuses pour chaque catégorie
+    const colorPalettes = [
+      'bg-gradient-to-br from-blue-500 to-blue-600',
+      'bg-gradient-to-br from-emerald-500 to-teal-600', 
+      'bg-gradient-to-br from-purple-500 to-violet-600',
+      'bg-gradient-to-br from-orange-500 to-red-500',
+      'bg-gradient-to-br from-pink-500 to-rose-600',
+      'bg-gradient-to-br from-indigo-500 to-blue-600',
+      'bg-gradient-to-br from-green-500 to-emerald-600',
+      'bg-gradient-to-br from-yellow-500 to-orange-500',
+      'bg-gradient-to-br from-cyan-500 to-blue-500',
+      'bg-gradient-to-br from-red-500 to-pink-500',
+      'bg-gradient-to-br from-violet-500 to-purple-600',
+      'bg-gradient-to-br from-teal-500 to-cyan-600',
+      'bg-gradient-to-br from-amber-500 to-orange-600',
+      'bg-gradient-to-br from-lime-500 to-green-600',
+      'bg-gradient-to-br from-fuchsia-500 to-pink-600',
+      'bg-gradient-to-br from-slate-500 to-gray-600'
+    ];
+
+    // Icônes variées pour chaque catégorie
+    const iconMap: Record<string, { icon: any, colorIndex: number }> = {
+      'Calendar': { icon: Calendar, colorIndex: 0 },
+      'Star': { icon: Star, colorIndex: 1 },
+      'Sparkles': { icon: Sparkles, colorIndex: 2 },
+      'Heart': { icon: Heart, colorIndex: 3 },
+      'PartyPopper': { icon: PartyPopper, colorIndex: 4 },
+      'Moon': { icon: Moon, colorIndex: 5 },
+      'Zap': { icon: Zap, colorIndex: 6 },
+      'BookOpen': { icon: BookOpen, colorIndex: 7 },
+      'GraduationCap': { icon: GraduationCap, colorIndex: 8 },
+      'Users': { icon: Users, colorIndex: 9 },
+      'Gift': { icon: Gift, colorIndex: 10 },
+      'FileText': { icon: FileText, colorIndex: 11 },
+      'Magnet': { icon: Magnet, colorIndex: 12 },
+      'Crown': { icon: Crown, colorIndex: 13 },
+      'Music': { icon: Music, colorIndex: 14 },
+      'Folder': { icon: Folder, colorIndex: 15 }
     };
 
-    return iconMap[iconName] || { 
-      icon: Star, 
-      color: isSelected ? 'bg-gray-500' : 'bg-gray-400' 
+    const categoryData = iconMap[iconName] || { icon: Star, colorIndex: 0 };
+    const baseColor = colorPalettes[categoryData.colorIndex % colorPalettes.length];
+    
+    return {
+      icon: categoryData.icon,
+      color: isSelected ? `${baseColor} shadow-lg scale-110` : `${baseColor} hover:scale-105`
     };
   };
 
@@ -482,12 +498,16 @@ export const HomePage = () => {
             
             <div className="flex flex-wrap justify-center gap-8">
               <div
-                className={`flex flex-col items-center gap-3 cursor-pointer group transition-all duration-200 ${
+                className={`flex flex-col items-center gap-3 cursor-pointer group transition-all duration-300 ${
                   !selectedCategory ? 'scale-110' : 'hover:scale-105'
                 }`}
                 onClick={() => setSelectedCategory(null)}
               >
-                <div className={`w-20 h-20 ${!selectedCategory ? 'bg-purple-500' : 'bg-gray-400'} rounded-full flex items-center justify-center text-white text-2xl shadow-lg transition-all duration-200`}>
+                <div className={`w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl shadow-lg transition-all duration-300 ${
+                  !selectedCategory 
+                    ? 'bg-gradient-to-br from-purple-500 to-indigo-600 shadow-xl scale-110' 
+                    : 'bg-gradient-to-br from-gray-400 to-gray-500 hover:scale-105'
+                }`}>
                   <Eye className="w-8 h-8" />
                 </div>
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300 text-center max-w-20">
@@ -500,12 +520,12 @@ export const HomePage = () => {
                 return (
                   <div
                     key={category.id}
-                    className={`flex flex-col items-center gap-3 cursor-pointer group transition-all duration-200 ${
+                    className={`flex flex-col items-center gap-3 cursor-pointer group transition-all duration-300 ${
                       selectedCategory === category.id ? 'scale-110' : 'hover:scale-105'
                     }`}
                     onClick={() => setSelectedCategory(category.id)}
                   >
-                    <div className={`w-20 h-20 ${color} rounded-full flex items-center justify-center text-white shadow-lg transition-all duration-200 group-hover:scale-105`}>
+                    <div className={`w-20 h-20 ${color} rounded-full flex items-center justify-center text-white transition-all duration-300`}>
                       <IconComponent className="w-8 h-8" />
                     </div>
                     <span className="text-sm font-medium text-gray-700 dark:text-gray-300 text-center max-w-20">

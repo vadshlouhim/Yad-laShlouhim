@@ -69,6 +69,19 @@ export const Header = () => {
     navigate('/admin');
   };
 
+  // Gérer le scroll du body quand le menu mobile est ouvert
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.classList.add('menu-open');
+    } else {
+      document.body.classList.remove('menu-open');
+    }
+
+    // Cleanup au démontage du composant
+    return () => {
+      document.body.classList.remove('menu-open');
+    };
+  }, [isMenuOpen]);
 
   return (
     <>
@@ -85,10 +98,16 @@ export const Header = () => {
                 alt="Yad La'Shlouhim Logo"
                 className="w-10 h-10 object-contain"
               />
+              {/* Logo texte - version blanche pour mode sombre, version normale pour mode clair */}
+              <img 
+                src="https://ydlyokoawuivemrqphos.supabase.co/storage/v1/object/public/Logo%20du%20site/Yad-La-Shlouhim-Affiches-communautaire-juive-paris-logo-blanc.png"
+                alt="Yad La'Shlouhim"
+                className="h-10 object-contain dark:block hidden"
+              />
               <img 
                 src="https://ydlyokoawuivemrqphos.supabase.co/storage/v1/object/public/Logo%20du%20site/Yad-La-Shlouhim-Affiches-communautaire-juive-paris-logo.png"
                 alt="Yad La'Shlouhim"
-                className="h-10 object-contain"
+                className="h-10 object-contain block dark:hidden"
               />
             </Link>
 
@@ -138,12 +157,12 @@ export const Header = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-40 md:hidden">
+        <div className="fixed inset-0 z-40 md:hidden overflow-hidden">
           <div 
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm overflow-hidden"
             onClick={() => setIsMenuOpen(false)}
           />
-          <div className="fixed right-0 top-0 h-full w-64 bg-white dark:bg-gray-800 shadow-xl transform transition-transform duration-300">
+          <div className="fixed right-0 top-0 h-full w-64 bg-white dark:bg-gray-800 shadow-xl transform transition-transform duration-300 overflow-y-auto">
             <div className="flex items-center justify-between p-4 border-b border-gray-200">
               <span className="text-lg font-semibold text-gray-900">Menu</span>
               <button
