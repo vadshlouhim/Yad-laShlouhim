@@ -32,11 +32,26 @@ export const SuccessPanel = ({ purchase, sessionId }: SuccessPanelProps) => {
         return;
       }
 
-      const response = await fetch('/.netlify/functions/sendPurchaseEmail', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId })
-      });
+      // Try Netlify function first, fallback to Supabase edge function
+      let response;
+      try {
+        response = await fetch('/.netlify/functions/sendPurchaseEmail', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionId })
+        });
+      } catch (netlifyError) {
+        console.log('Netlify function failed, trying Supabase edge function...');
+        
+        response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-purchase-email`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+          },
+          body: JSON.stringify({ sessionId })
+        });
+      }
 
       if (response.ok) {
         setEmailSent(true);

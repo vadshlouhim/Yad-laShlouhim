@@ -5,11 +5,10 @@ import { Container } from '../components/ui/Container';
 import { Button } from '../components/ui/Button';
 import { SEOHead } from '../components/seo/SEOHead';
 import { StructuredData } from '../components/seo/StructuredData';
-import { UserSubscription } from '../components/stripe/UserSubscription';
-import { useAuth } from '../components/auth/AuthProvider';
 import { supabase } from '../lib/supabase';
 import { Poster, Category } from '../types';
 import { PurchaseModal } from '../components/purchase/PurchaseModal';
+import { PaymentDebug } from '../components/debug/PaymentDebug';
 
 export const HomePage = () => {
   const [posters, setPosters] = useState<Poster[]>([]);
@@ -30,7 +29,6 @@ export const HomePage = () => {
   const [selectedPosterForPurchase, setSelectedPosterForPurchase] = useState<Poster | null>(null);
   const [visibleCategoriesCount, setVisibleCategoriesCount] = useState(4);
   const [visiblePostersCount, setVisiblePostersCount] = useState(4);
-  const { user } = useAuth();
 
   useEffect(() => {
     loadData();
@@ -309,13 +307,6 @@ export const HomePage = () => {
               <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
                 La communication simplifiée au service de la communauté
               </p>
-              
-              {/* User Subscription Display */}
-              {user && (
-                <div className="mt-8">
-                  <UserSubscription />
-                </div>
-              )}
             </div>
 
             {/* Right Side - Posters Carousel */}
@@ -855,6 +846,9 @@ export const HomePage = () => {
           onClose={() => setShowPurchaseModal(false)}
         />
       )}
+      
+      {/* Debug Payment - Only in development */}
+      {import.meta.env.DEV && <PaymentDebug />}
     </div>
     </>
   );

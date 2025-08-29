@@ -51,29 +51,65 @@ export const PurchaseModal = ({ posterId, posterImage, posterTitle, priceLabel, 
 
       console.log('💳 Création du checkout Stripe...');
       
-      const checkoutResponse = await fetch('/.netlify/functions/createCheckout', {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-          posterId,
-          customerData: {
-            customer_name: formData.customer_name.trim(),
-            customer_email: formData.customer_email.trim(),
-            phone: formData.phone.trim() || null,
-            organization: formData.organization.trim() || null,
-            notes: formData.notes.trim() || null,
-          }
-        })
-      });
+      // Essayer d'abord la fonction Netlify (plus fiable), puis Supabase en fallback
+      let checkoutResponse;
+      let usingNetlify = true;
       
-      console.log('📡 Réponse checkout:', checkoutResponse.status);
+      try {
+        console.log('🔄 Tentative avec fonction Netlify...');
+        checkoutResponse = await fetch('/.netlify/functions/createCheckout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            posterId,
+            customerData: {
+              customer_name: formData.customer_name.trim(),
+              customer_email: formData.customer_email.trim(),
+              phone: formData.phone.trim() || null,
+              organization: formData.organization.trim() || null,
+              notes: formData.notes.trim() || null,
+            }
+          })
+        });
+        
+        if (!checkoutResponse.ok) {
+          throw new Error(`Netlify function failed: ${checkoutResponse.status}`);
+        }
+        
+        console.log('✅ Fonction Netlify utilisée avec succès');
+        
+      } catch (netlifyError) {
+        console.log('⚠️ Fonction Netlify échouée, tentative Supabase...');
+        usingNetlify = false;
+        
+        // Fallback vers Supabase Edge Function
+        checkoutResponse = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-poster-checkout`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+          },
+          body: JSON.stringify({ 
+            posterId,
+            customerData: {
+              customer_name: formData.customer_name.trim(),
+              customer_email: formData.customer_email.trim(),
+              phone: formData.phone.trim() || null,
+              organization: formData.organization.trim() || null,
+              notes: formData.notes.trim() || null,
+            }
+          })
+        });
+        
+        console.log('📡 Fonction Supabase utilisée');
+      }
+      
+      console.log(`📡 Réponse checkout (${usingNetlify ? 'Netlify' : 'Supabase'}):`, checkoutResponse.status);
       
       if (!checkoutResponse.ok) {
         const errorData = await checkoutResponse.json();
         console.error('❌ Erreur checkout:', errorData);
-        throw new Error(errorData.error || `Erreur HTTP ${checkoutResponse.status}`);
+        throw new Error(errorData.error || errorData.details || `Erreur HTTP ${checkoutResponse.status}`);
       }
       
       const checkoutData = await checkoutResponse.json();
@@ -90,6 +126,23 @@ export const PurchaseModal = ({ posterId, posterImage, posterTitle, priceLabel, 
       console.error('❌ Erreur processus achat:', error);
       const errorMessage = error instanceof Error ? error.message : 'Une erreur inconnue est survenue';
       setError(errorMessage);
+      
+      // Diagnostic détaillé
+      console.error('=== DIAGNOSTIC ERREUR PAIEMENT ===');
+      console.error('🆔 Poster ID:', posterId);
+      console.error('📝 Form Data:', formData);
+      console.error('🌐 Supabase URL:', import.meta.env.VITE_SUPABASE_URL);
+      console.error('🔑 Supabase Key:', import.meta.env.VITE_SUPABASE_ANON_KEY ? 'Configurée' : 'Manquante');
+      console.error('❌ Error object:', error);
+      
+      // Suggestions de résolution
+      if (errorMessage.includes('fetch')) {
+        setError('Problème de connexion. Vérifiez votre configuration Supabase.');
+      } else if (errorMessage.includes('404')) {
+        setError('Fonction de paiement non trouvée. Les Edge Functions doivent être déployées.');
+      } else if (errorMessage.includes('401') || errorMessage.includes('403')) {
+        setError('Problème d\'authentification. Vérifiez vos clés API Supabase.');
+      }
     } finally {
       setSubmitting(false);
     }
@@ -237,6 +290,18 @@ export const PurchaseModal = ({ posterId, posterImage, posterTitle, priceLabel, 
                 <strong>📧 Après paiement :</strong> Vous recevrez immédiatement un email avec votre lien Canva et votre facture.
               </p>
             </div>
+
+            {/* Debug info en développement */}
+            {import.meta.env.DEV && (
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3">
+                <p className="text-xs text-yellow-700 dark:text-yellow-300">
+                  <strong>🐛 Debug:</strong> Poster ID: {posterId}
+                </p>
+                <p className="text-xs text-yellow-700 dark:text-yellow-300">
+                  Supabase URL: {import.meta.env.VITE_SUPABASE_URL ? '✅' : '❌'}
+                </p>
+              </div>
+            )}
 
             <Button 
               type="submit" 
