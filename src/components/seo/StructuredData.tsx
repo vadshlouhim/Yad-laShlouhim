@@ -217,42 +217,6 @@ export const StructuredData = ({ type, data }: StructuredDataProps) => {
             ]
           } as ProductSchema;
 
-        case 'organization':
-          return {
-            '@context': 'https://schema.org',
-            '@type': 'Organization',
-            name: 'Yad La\'Shlouhim',
-            url: baseUrl,
-            logo: 'https://ydlyokoawuivemrqphos.supabase.co/storage/v1/object/public/Logo%20du%20site/Yad-La-Shlouhim-Affiches-communautaire-juive-paris-logo-rond.png',
-            contactPoint: {
-              '@type': 'ContactPoint',
-              contactType: 'customer service',
-              email: 'Yad-lashlouhim770@gmail.com',
-              telephone: '+33667288851',
-              availableLanguage: ['French', 'Hebrew'],
-              hoursAvailable: {
-                '@type': 'OpeningHoursSpecification',
-                dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-                opens: '08:00',
-                closes: '22:00'
-              }
-            },
-            address: {
-              '@type': 'PostalAddress',
-              addressCountry: 'FR',
-              addressRegion: 'Île-de-France'
-            },
-            sameAs: [
-              'https://wa.me/33667288851'
-            ],
-            areaServed: {
-              '@type': 'Country',
-              name: 'France'
-            },
-            knowsAbout: data.services || [
-              'Design graphique',
-            ]
-          }
         case 'faq':
           return {
             '@context': 'https://schema.org',
