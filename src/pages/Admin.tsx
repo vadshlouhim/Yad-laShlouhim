@@ -10,10 +10,11 @@ import { PosterTable } from '../components/admin/PosterTable';
 import { FeaturedPostersManager } from '../components/admin/FeaturedPostersManager';
 import { StorageManager } from '../components/admin/StorageManager';
 import { DebugSupabase } from '../components/admin/DebugSupabase';
+import { SupabaseSetup } from '../components/setup/SupabaseSetup';
 import { supabase } from '../lib/supabase';
 import { Poster } from '../types';
 
-type AdminView = 'posters' | 'categories' | 'featured' | 'storage' | 'debug';
+type AdminView = 'posters' | 'categories' | 'featured' | 'storage' | 'debug' | 'setup';
 
 export const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -214,6 +215,18 @@ export const Admin = () => {
               <span className="hidden xs:inline">Debug</span>
               <span className="xs:hidden">Bug</span>
             </button>
+            <button
+              onClick={() => setCurrentView('setup')}
+              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-all duration-200 text-xs sm:text-sm ${
+                currentView === 'setup'
+                  ? 'bg-green-600 text-white shadow-md'
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+              }`}
+            >
+              <Database size={16} className="sm:w-[18px] sm:h-[18px]" />
+              <span className="hidden xs:inline">Setup</span>
+              <span className="xs:hidden">Setup</span>
+            </button>
           </div>
         </div>
 
@@ -226,6 +239,8 @@ export const Admin = () => {
           <StorageManager />
         ) : currentView === 'debug' ? (
           <DebugSupabase />
+        ) : currentView === 'setup' ? (
+          <SupabaseSetup />
         ) : (
           <div className="space-y-6">
             {/* Header */}
