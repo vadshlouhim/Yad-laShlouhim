@@ -5,6 +5,7 @@ import { Container } from '../components/ui/Container';
 import { Button } from '../components/ui/Button';
 import { SuccessPanel } from '../components/purchase/SuccessPanel';
 import { PurchaseResponse } from '../types';
+import { getPurchaseBySession } from '../utils/stripe';
 
 export const Success = () => {
   const [searchParams] = useSearchParams();
@@ -25,32 +26,7 @@ export const Success = () => {
 
   const loadPurchase = async (sessionId: string) => {
     try {
-      // Try Netlify function first, fallback to Supabase edge function
-      let response;
-      try {
-        response = await fetch('/.netlify/functions/getPurchaseBySession', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sessionId })
-        });
-      } catch (netlifyError) {
-        console.log('Netlify function failed, trying Supabase edge function...');
-        
-        response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-purchase-by-session`, {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
-          },
-          body: JSON.stringify({ sessionId })
-        });
-      }
-
-      if (!response.ok) {
-        throw new Error('Purchase not found');
-      }
-
-      const data = await response.json();
+      const data = await getPurchaseBySession(sessionId);
       setPurchase(data);
     } catch (error) {
       console.error('Error loading purchase:', error);
