@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Users, Image, ArrowLeft, LogOut, Star, Bug, Folder } from 'lucide-react';
+import { Plus, Users, Image, ArrowLeft, LogOut, Star, Bug, Folder, Database } from 'lucide-react';
 import { Container } from '../components/ui/Container';
 import { Button } from '../components/ui/Button';
 import { Link } from 'react-router-dom';
