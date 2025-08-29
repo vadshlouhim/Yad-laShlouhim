@@ -69,11 +69,23 @@ export const SEOHead = ({
     updateMetaTag('keywords', keywords);
     updateMetaTag('author', author);
     updateMetaTag('robots', noindex ? 'noindex, nofollow' : 'index, follow');
+    updateMetaTag('googlebot', noindex ? 'noindex, nofollow' : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
     updateMetaTag('generator', 'Yad La\'Shlouhim - React + Vite');
     updateMetaTag('application-name', 'Yad La\'Shlouhim');
     updateMetaTag('theme-color', '#3B82F6');
     updateMetaTag('msapplication-TileColor', '#3B82F6');
     updateMetaTag('apple-mobile-web-app-title', 'Yad La\'Shlouhim');
+    
+    // Meta tags SEO avancés
+    updateMetaTag('geo.region', 'FR');
+    updateMetaTag('geo.placename', 'France');
+    updateMetaTag('ICBM', '48.8566, 2.3522');
+    updateMetaTag('language', 'French');
+    updateMetaTag('content-language', 'fr');
+    updateMetaTag('distribution', 'global');
+    updateMetaTag('rating', 'general');
+    updateMetaTag('revisit-after', '7 days');
+    updateMetaTag('classification', 'Business, Design, Community, Jewish Culture');
 
     // Open Graph
     updateMetaTag('og:title', title, true);
