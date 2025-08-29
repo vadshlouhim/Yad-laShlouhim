@@ -217,25 +217,6 @@ export const StructuredData = ({ type, data }: StructuredDataProps) => {
             ]
           } as ProductSchema;
 
-        case 'website':
-          const websiteSchema: WebsiteSchema = {
-            '@context': 'https://schema.org',
-            '@type': 'WebSite',
-            name: 'Yad La\'Shlouhim',
-            url: baseUrl,
-            ...data
-          };
-          
-          if (data.searchAction) {
-            websiteSchema.potentialAction = {
-              '@type': 'SearchAction',
-              target: `${baseUrl}/?q={search_term_string}`,
-              'query-input': 'required name=search_term_string'
-            };
-          }
-          
-          return websiteSchema;
-
         case 'organization':
           return {
             '@context': 'https://schema.org',
@@ -277,19 +258,6 @@ export const StructuredData = ({ type, data }: StructuredDataProps) => {
             ],
             ...data
           } as OrganizationSchema;
-
-        case 'website':
-          return {
-            '@context': 'https://schema.org',
-            '@type': 'WebSite',
-            name: 'Yad La\'Shlouhim',
-            url: baseUrl,
-            potentialAction: {
-              '@type': 'SearchAction',
-              target: `${baseUrl}/search?q={search_term_string}`,
-              'query-input': 'required name=search_term_string'
-            }
-          } as ProductSchema;
 
         case 'breadcrumb':
           return {
