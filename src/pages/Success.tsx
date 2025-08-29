@@ -5,6 +5,7 @@ import { Container } from '../components/ui/Container';
 import { Button } from '../components/ui/Button';
 import { SuccessPanel } from '../components/purchase/SuccessPanel';
 import { PurchaseResponse } from '../types';
+import { getPurchaseBySession } from '../utils/stripe';
 
 export const Success = () => {
   const [searchParams] = useSearchParams();
@@ -25,7 +26,17 @@ export const Success = () => {
 
   const loadPurchase = async (sessionId: string) => {
     try {
-      const response = await fetch('/.netlify/functions/getPurchaseBySession', {
+
+
+      const data = await getPurchaseBySession(sessionId);
+      setPurchase(data);
+    } catch (error) {
+      console.error('Error loading purchase:', error);
+      setError('Achat non trouvé ou erreur de chargement');
+    } finally {
+      setLoading(false);
+    }
+  };
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId })

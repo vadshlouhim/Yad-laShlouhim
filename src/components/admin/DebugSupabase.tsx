@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AlertCircle, CheckCircle, XCircle } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { Button } from '../ui/Button';
+import { StripeStatus } from '../stripe/StripeStatus';
 import { InitializeCategories } from './InitializeCategories';
 import { FixPosters } from './FixPosters';
 import { FixForeignKey } from './FixForeignKey';
@@ -101,6 +102,19 @@ export const DebugSupabase = () => {
 
   return (
     <div className="space-y-8">
+      {/* Stripe Status */}
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+            <span className="text-white text-xs font-bold">$</span>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            Statut Stripe
+          </h2>
+        </div>
+        <StripeStatus />
+      </div>
+      
       <FixForeignKey />
       <InitializeCategories />
       <FixPosters />

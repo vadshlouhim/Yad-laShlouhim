@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X, ShoppingBag, Info, Mail, Phone, Building2, FileText } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { createCheckoutSession } from '../../utils/stripe';
 
 interface PurchaseModalProps {
   posterId: string;
@@ -51,37 +52,38 @@ export const PurchaseModal = ({ posterId, posterImage, posterTitle, priceLabel, 
 
       console.log('💳 Création du checkout Stripe...');
       
-      const checkoutResponse = await fetch('/.netlify/functions/createCheckout', {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-          posterId,
-          customerData: {
-            customer_name: formData.customer_name.trim(),
-            customer_email: formData.customer_email.trim(),
-            phone: formData.phone.trim() || null,
-            organization: formData.organization.trim() || null,
-            notes: formData.notes.trim() || null,
-          }
-        })
+      // Try Netlify function first, fallback to Supabase edge function
+      let checkoutResponse;
+      try {
+        checkoutResponse = await fetch('/.netlify/functions/createCheckout', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 
+            posterId,
+            customerData: {
+              customer_name: formData.customer_name.trim(),
+              customer_email: formData.customer_email.trim(),
+              phone: formData.phone.trim() || null,
+              organization: formData.organization.trim() || null,
+              notes: formData.notes.trim() || null,
+            }
+      const result = await createCheckoutSession(posterId, {
+        customer_name: formData.customer_name.trim(),
+        customer_email: formData.customer_email.trim(),
+        phone: formData.phone.trim() || null,
+        organization: formData.organization.trim() || null,
+        notes: formData.notes.trim() || null,
       });
       
-      console.log('📡 Réponse checkout:', checkoutResponse.status);
-      
-      if (!checkoutResponse.ok) {
-        const errorData = await checkoutResponse.json();
-        console.error('❌ Erreur checkout:', errorData);
-        throw new Error(errorData.error || `Erreur HTTP ${checkoutResponse.status}`);
+      if (result.error) {
+        throw new Error(result.error);
       }
       
-      const checkoutData = await checkoutResponse.json();
-      console.log('✅ Checkout créé:', checkoutData);
-      
-      if (checkoutData.url) {
-        console.log('🚀 Redirection vers Stripe:', checkoutData.url);
-        window.location.href = checkoutData.url;
+      if (result.url) {
+        console.log('🚀 Redirection vers Stripe:', result.url);
+        window.location.href = result.url;
       } else {
         throw new Error('URL de checkout manquante');
       }
