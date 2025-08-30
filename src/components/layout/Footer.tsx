@@ -64,7 +64,7 @@ export const Footer = () => {
           <div className="border-t border-gray-400 dark:border-blue-800 mt-12 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-gray-600 dark:text-gray-300 text-sm">
-                © 2025 Yad La'Shlouhim. Tous droits réservés. Site web réalisé par WebFitYou.
+                © 2025 Yad La'Shlouhim. Tous droits réservés. Site web réalisé par <a href="https://webfityou.com/" target="_blank" rel="noopener noreferrer" className="font-bold underline">WebFitYou</a>.
               </p>
               <div className="flex items-center gap-6 text-sm">
                 <a href="#" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-colors duration-200">
