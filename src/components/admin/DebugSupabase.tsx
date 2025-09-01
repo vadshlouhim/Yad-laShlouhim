@@ -3,6 +3,7 @@ import { AlertCircle, CheckCircle, XCircle } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { Button } from '../ui/Button';
 import { StripeStatus } from '../stripe/StripeStatus';
+import { StripeSetup } from '../stripe/StripeSetup';
 import { InitializeCategories } from './InitializeCategories';
 import { FixPosters } from './FixPosters';
 import { FixForeignKey } from './FixForeignKey';
@@ -170,6 +171,13 @@ export const DebugSupabase = () => {
           </h2>
         </div>
         <StripeStatus />
+        
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            Configuration Stripe
+          </h3>
+          <StripeSetup />
+        </div>
       </div>
       
       <FixForeignKey />

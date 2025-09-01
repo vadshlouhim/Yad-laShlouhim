@@ -9,6 +9,7 @@ import { StructuredData } from '../components/seo/StructuredData';
 import { supabase } from '../lib/supabase';
 import { Poster, Category } from '../types';
 import { PurchaseModal } from '../components/purchase/PurchaseModal';
+import { isSupabaseConfigured } from '../lib/supabase';
 
 export const HomePage = () => {
   const [posters, setPosters] = useState<Poster[]>([]);
@@ -50,6 +51,13 @@ export const HomePage = () => {
   }, [featuredPosters.length]);
 
   const loadData = async () => {
+    // Vérifier si Supabase est configuré
+    if (!isSupabaseConfigured()) {
+      console.warn('Supabase not configured, using fallback data');
+      setLoading(false);
+      return;
+    }
+    
     let postersResponse: any = null;
     
     try {

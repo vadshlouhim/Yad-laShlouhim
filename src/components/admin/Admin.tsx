@@ -13,10 +13,11 @@ import { DebugSupabase } from './DebugSupabase';
 import { SitemapManager } from './SitemapManager';
 import { DatabaseFixer } from './DatabaseFixer';
 import { SupabaseSetup } from '../setup/SupabaseSetup';
+import { StripeSetup } from '../stripe/StripeSetup';
 import { supabase } from '../../lib/supabase';
 import { Poster } from '../../types';
 
-type AdminView = 'posters' | 'categories' | 'featured' | 'storage' | 'debug' | 'setup' | 'fix' | 'sitemap';
+type AdminView = 'posters' | 'categories' | 'featured' | 'storage' | 'debug' | 'setup' | 'stripe' | 'fix' | 'sitemap';
 
 export const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -238,6 +239,18 @@ export const Admin = () => {
               <span className="xs:hidden">Setup</span>
             </button>
             <button
+              onClick={() => setCurrentView('stripe')}
+              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-all duration-200 text-xs sm:text-sm ${
+                currentView === 'stripe'
+                  ? 'bg-purple-600 text-white shadow-md'
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+              }`}
+            >
+              <Database size={16} className="sm:w-[18px] sm:h-[18px]" />
+              <span className="hidden xs:inline">Stripe</span>
+              <span className="xs:hidden">💳</span>
+            </button>
+            <button
               onClick={() => setCurrentView('sitemap')}
               className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-all duration-200 text-xs sm:text-sm ${
                 currentView === 'sitemap'
@@ -275,6 +288,8 @@ export const Admin = () => {
           <DebugSupabase />
         ) : currentView === 'setup' ? (
           <SupabaseSetup />
+        ) : currentView === 'stripe' ? (
+          <StripeSetup />
         ) : currentView === 'fix' ? (
           <DatabaseFixer />
         ) : currentView === 'sitemap' ? (

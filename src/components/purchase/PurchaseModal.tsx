@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { X, ShoppingBag, Info, Mail, Phone, Building2, FileText } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { validateStripeConfig } from '../../lib/stripe';
+import { isSupabaseConfigured } from '../../lib/supabase';
 
 interface PurchaseModalProps {
   posterId: string;
@@ -30,6 +32,18 @@ export const PurchaseModal = ({ posterId, posterImage, posterTitle, priceLabel, 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Vérifier la configuration avant de procéder
+    if (!isSupabaseConfigured()) {
+      setError('Supabase n\'est pas configuré. Contactez l\'administrateur.');
+      return;
+    }
+    
+    if (!validateStripeConfig()) {
+      setError('Stripe n\'est pas configuré. Contactez l\'administrateur.');
+      return;
+    }
+    
     setSubmitting(true);
     setError(null);
     
