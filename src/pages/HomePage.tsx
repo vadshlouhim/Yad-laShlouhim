@@ -453,6 +453,27 @@ export const HomePage = () => {
         </Container>
       </section>
 
+      {/* Call to Action Button */}
+      <section className="py-12 bg-white dark:bg-gray-900">
+        <Container>
+          <div className="text-center">
+            <Button
+              onClick={() => {
+                const element = document.querySelector('#gallery');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
+              size="lg"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            >
+              <Eye className="w-6 h-6 mr-3" />
+              Découvrir nos affiches
+            </Button>
+          </div>
+        </Container>
+      </section>
+
       {/* How It Works Section */}
       <section id="how-it-works" className="py-20 bg-white dark:bg-gray-900">
         <Container>
