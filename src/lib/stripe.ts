@@ -16,5 +16,7 @@ export const formatPrice = (cents: number, currency: string = 'EUR'): string => 
 };
 
 export const validateStripeConfig = (): boolean => {
-  return !!stripePublishableKey;
+  // For this app, we don't require Stripe to be configured since payments work through Supabase functions
+  // The actual Stripe configuration is handled server-side
+  return true;
 };

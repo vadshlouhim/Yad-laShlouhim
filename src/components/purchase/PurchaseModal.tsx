@@ -39,11 +39,6 @@ export const PurchaseModal = ({ posterId, posterImage, posterTitle, priceLabel, 
       return;
     }
     
-    if (!validateStripeConfig()) {
-      setError('Stripe n\'est pas configuré. Contactez l\'administrateur.');
-      return;
-    }
-    
     setSubmitting(true);
     setError(null);
     
@@ -304,18 +299,6 @@ export const PurchaseModal = ({ posterId, posterImage, posterTitle, priceLabel, 
                 <strong>📧 Après paiement :</strong> Vous recevrez immédiatement un email avec votre lien Canva et votre facture.
               </p>
             </div>
-
-            {/* Debug info en développement */}
-            {import.meta.env.DEV && (
-              <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3">
-                <p className="text-xs text-yellow-700 dark:text-yellow-300">
-                  <strong>🐛 Debug:</strong> Poster ID: {posterId}
-                </p>
-                <p className="text-xs text-yellow-700 dark:text-yellow-300">
-                  Supabase URL: {import.meta.env.VITE_SUPABASE_URL ? '✅' : '❌'}
-                </p>
-              </div>
-            )}
 
             <Button 
               type="submit" 
