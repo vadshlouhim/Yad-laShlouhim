@@ -1,0 +1,268 @@
+/* 
+ * Styles responsifs mobiles style Apple
+ * Optimisations pour Yad La'Shlouhim
+ */
+
+/* Prévention du body scroll quand le menu mobile est ouvert */
+body.menu-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+/* Utilitaires responsive Apple-like */
+@media (max-width: 640px) {
+  /* Amélioration des zones de toucher */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Optimisation des textes pour mobile */
+  .mobile-text-adjust {
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Espacement mobile optimisé */
+  .mobile-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Amélioration des bordures sur mobile */
+  .mobile-border-radius {
+    border-radius: 1rem;
+  }
+
+  /* Amélioration des ombres sur mobile */
+  .mobile-shadow {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Breakpoint pour très petits écrans (iPhone SE, etc.) */
+@media (max-width: 375px) {
+  .xs-text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .xs-text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .xs-text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .xs-p-3 {
+    padding: 0.75rem;
+  }
+
+  .xs-gap-2 {
+    gap: 0.5rem;
+  }
+}
+
+/* Animations Apple-like */
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToRight {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Animation d'entrée du menu mobile */
+.mobile-menu-enter {
+  animation: slideInFromRight 0.3s ease-out;
+}
+
+.mobile-menu-exit {
+  animation: slideOutToRight 0.3s ease-in;
+}
+
+/* Animation d'entrée des éléments de navigation */
+.nav-item-enter {
+  animation: fadeInUp 0.4s ease-out;
+  animation-fill-mode: both;
+}
+
+/* Optimisation du scroll pour iOS */
+.smooth-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Styles pour le focus sur mobile (accessibilité) */
+@media (max-width: 768px) {
+  *:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+  
+  button:focus,
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+}
+
+/* Amélioration des interactions tactiles */
+.touch-action-manipulation {
+  touch-action: manipulation;
+}
+
+/* Prévention du zoom sur les inputs sur iOS */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input[type="text"],
+  input[type="email"],
+  input[type="search"],
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* Styles pour les petits écrans uniquement */
+@media (max-width: 480px) {
+  /* Container avec padding réduit */
+  .mobile-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Titres adaptés aux petits écrans */
+  .mobile-title-xl {
+    font-size: 2rem;
+    line-height: 2.25rem;
+  }
+
+  .mobile-title-lg {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  /* Espacement vertical réduit */
+  .mobile-space-y-4 > * + * {
+    margin-top: 1rem;
+  }
+
+  .mobile-space-y-6 > * + * {
+    margin-top: 1.5rem;
+  }
+
+  /* Grille adaptée mobile */
+  .mobile-grid-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .mobile-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Dark mode adaptations pour mobile */
+@media (prefers-color-scheme: dark) and (max-width: 768px) {
+  .mobile-dark-bg {
+    background-color: #111827;
+  }
+
+  .mobile-dark-text {
+    color: #f9fafb;
+  }
+
+  .mobile-dark-border {
+    border-color: #374151;
+  }
+}
+
+/* Amélioration de la lisibilité sur mobile */
+@media (max-width: 640px) {
+  /* Hauteurs de ligne optimisées */
+  .mobile-leading-relaxed {
+    line-height: 1.625;
+  }
+
+  .mobile-leading-loose {
+    line-height: 2;
+  }
+
+  /* Espacement des lettres pour petits écrans */
+  .mobile-tracking-wide {
+    letter-spacing: 0.025em;
+  }
+
+  /* Amélioration des contrastes */
+  .mobile-text-high-contrast {
+    color: #000000;
+  }
+
+  .dark .mobile-text-high-contrast {
+    color: #ffffff;
+  }
+}
+
+/* Styles spécifiques pour les notifications/toasts sur mobile */
+@media (max-width: 640px) {
+  .mobile-toast {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 100;
+  }
+}
+
+/* Optimisation des boutons pour le tactile */
+@media (max-width: 768px) {
+  .mobile-button {
+    min-height: 48px;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 12px;
+    touch-action: manipulation;
+  }
+
+  .mobile-button-sm {
+    min-height: 44px;
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .mobile-button-lg {
+    min-height: 56px;
+    padding: 16px 32px;
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,75 @@
+# Robots.txt optimisé pour Yad La'Shlouhim
+# Site: https://yad-lashlouhim.com
+# Contact: Yad-lashlouhim770@gmail.com
+
+User-agent: *
+Allow: /
+
+# Pages importantes pour l'indexation prioritaire
+Allow: /news
+Allow: /faq
+Allow: /news/*
+
+# Optimisation pour les moteurs de recherche spécialisés
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 3
+
+# Bloquer les pages d'administration et privées
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /_next/
+Disallow: /api/
+Disallow: /.netlify/
+Disallow: /.well-known/
+
+# Bloquer les pages de processus de paiement (privées)
+Disallow: /achat/succes
+Disallow: /achat/annule
+Disallow: /stripe-*
+
+# Autoriser explicitement les ressources statiques importantes
+Allow: /assets/
+Allow: /images/
+Allow: *.css
+Allow: *.js
+Allow: *.png
+Allow: *.jpg
+Allow: *.jpeg
+Allow: *.gif
+Allow: *.svg
+Allow: *.webp
+Allow: *.ico
+Allow: *.woff
+Allow: *.woff2
+
+# Sitemaps - URLs principales
+Sitemap: https://yad-lashlouhim.com/sitemap.xml
+Sitemap: https://yad-lashlouhim.com/sitemap-index.xml
+
+# Paramètres d'exploration optimisés
+Crawl-delay: 1
+
+# Informations de contact pour les moteurs de recherche
+# Email: Yad-lashlouhim770@gmail.com
+# Téléphone: +33 6 67 28 88 51
+# Spécialité: Affiches communautaires juives, Templates Canva
+# Zone de service: France, Communauté juive internationale
+
+# Mots-clés principaux pour l'indexation:
+# - affiches juives
+# - templates canva
+# - événements communautaires
+# - invitations shabbat
+# - fêtes juives
+# - design graphique religieux
+# - personnalisation canva
+# - communauté juive paris
