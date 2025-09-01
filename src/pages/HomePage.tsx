@@ -382,7 +382,7 @@ export const HomePage = () => {
                 </span>
               </h1>
               <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-lg mx-auto lg:mx-0">
-                + de 150 modèles d'affiches personnalisables avec Canva en quelques secondes
+                + de 150 modèles d'affiches personnalisables avec Canva en quelques secondes"
               </p>
             </div>
 
