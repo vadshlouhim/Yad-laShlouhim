@@ -862,45 +862,6 @@ export const HomePage = () => {
         </Container>
       </section>
 
-      {/* Video Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
-        <Container>
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-8">
-              Découvrez notre processus créatif
-            </h2>
-            <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl bg-gray-100 dark:bg-gray-700">
-              <iframe
-                src="https://www.youtube.com/embed/I3oUwDV_OoU"
-                title="Yad La'Shlouhim - Processus créatif"
-                className="w-full h-full"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            </div>
-            <p className="text-lg text-gray-600 dark:text-gray-400 mt-6">
-              Plongez dans l'univers de la création d'affiches communautaires
-            </p>
-          </div>
-        </Container>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-20 bg-white dark:bg-gray-900">
-        <Container>
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                Parlons de votre{' '}
-                <span className="text-blue-500">Projet</span>
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-                Transformons vos idées en réalité avec des créations exceptionnelles
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               {/* Left Panel - Contact and Service Information */}
               <div className="space-y-8">
                 <div className="flex items-start gap-4">
