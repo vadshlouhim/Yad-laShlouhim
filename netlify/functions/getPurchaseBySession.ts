@@ -2,8 +2,8 @@ import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY!
 );
 
 export const handler: Handler = async (event, context) => {
@@ -37,8 +37,50 @@ export const handler: Handler = async (event, context) => {
     }
 
     console.log('🔍 Recherche achat pour session:', sessionId);
+    console.log('🔑 Variables env disponibles:', {
+      hasSupabaseUrl: !!(process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL),
+      hasServiceRole: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+      hasAnonKey: !!process.env.VITE_SUPABASE_ANON_KEY
+    });
 
-    // Récupérer l'achat avec les détails de l'affiche depuis la table posters
+    // D'abord essayer sans jointure pour voir si l'achat existe
+    const { data: basicPurchase, error: basicError } = await supabase
+      .from('purchases')
+      .select('*')
+      .eq('stripe_session_id', sessionId)
+      .single();
+
+    if (basicError) {
+      console.error('❌ Achat non trouvé (basic):', basicError);
+      
+      // Essayer de lister tous les achats récents pour debug
+      const { data: recentPurchases, error: recentError } = await supabase
+        .from('purchases')
+        .select('stripe_session_id, created_at')
+        .order('created_at', { ascending: false })
+        .limit(5);
+      
+      console.log('📊 Achats récents:', recentPurchases);
+      console.log('🔍 Session recherchée:', sessionId);
+      
+      return {
+        statusCode: 404,
+        headers,
+        body: JSON.stringify({ 
+          error: 'Purchase not found',
+          sessionId,
+          recentPurchases: recentPurchases?.map(p => p.stripe_session_id) || [],
+          debug: {
+            basicError: basicError,
+            recentError: recentError
+          }
+        }),
+      };
+    }
+
+    console.log('✅ Achat trouvé (basic):', basicPurchase.id);
+
+    // Maintenant essayer avec la jointure pour les détails
     const { data: purchase, error } = await supabase
       .from('purchases')
       .select(`
@@ -48,12 +90,19 @@ export const handler: Handler = async (event, context) => {
       .eq('stripe_session_id', sessionId)
       .single();
 
-    if (error || !purchase) {
-      console.error('❌ Achat non trouvé:', error);
+    if (error) {
+      console.error('⚠️ Erreur jointure, utilisation données de base:', error);
+      // Utiliser les données de base si la jointure échoue
+      const response = {
+        canva_link: basicPurchase.canva_link,
+        receipt_url: basicPurchase.receipt_url,
+        poster_title: `Affiche ID: ${basicPurchase.poster_id}`
+      };
+      
       return {
-        statusCode: 404,
+        statusCode: 200,
         headers,
-        body: JSON.stringify({ error: 'Purchase not found' }),
+        body: JSON.stringify(response),
       };
     }
 

@@ -7,8 +7,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY!
 );
 
 export const handler: Handler = async (event, context) => {
@@ -81,6 +81,13 @@ export const handler: Handler = async (event, context) => {
         canva_link: session.metadata?.canva_link || ''
       };
 
+      console.log('📊 Données à insérer:', JSON.stringify(purchaseData, null, 2));
+      console.log('🔑 Variables env disponibles:', {
+        hasSupabaseUrl: !!(process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL),
+        hasServiceRole: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+        hasAnonKey: !!process.env.VITE_SUPABASE_ANON_KEY
+      });
+
       const { data: purchase, error: purchaseError } = await supabase
         .from('purchases')
         .insert(purchaseData)
@@ -89,8 +96,24 @@ export const handler: Handler = async (event, context) => {
 
       if (purchaseError) {
         console.error('❌ Erreur création purchase:', purchaseError);
+        console.error('📋 Détails erreur:', JSON.stringify(purchaseError, null, 2));
+        
+        // Essayer une insertion alternative sans la jointure
+        try {
+          const { data: simplePurchase, error: simpleError } = await supabase
+            .from('purchases')
+            .insert(purchaseData);
+          
+          if (simpleError) {
+            console.error('❌ Échec insertion simple aussi:', simpleError);
+          } else {
+            console.log('✅ Insertion simple réussie');
+          }
+        } catch (fallbackError) {
+          console.error('❌ Erreur fallback:', fallbackError);
+        }
       } else {
-        console.log('✅ Purchase créé:', purchase.id);
+        console.log('✅ Purchase créé:', purchase?.id || 'ID non disponible');
       }
 
       // 2. Récupérer le reçu Stripe si disponible
