@@ -15,7 +15,7 @@ import { DatabaseFixer } from '../components/admin/DatabaseFixer';
 import { supabase } from '../lib/supabase';
 import { Poster } from '../types';
 
-type AdminView = 'posters' | 'categories' | 'featured' | 'storage' | 'debug' | 'setup' | 'stripe' | 'fix';
+type AdminView = 'posters' | 'categories' | 'featured' | 'storage' | 'debug';
 
 export const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -222,43 +222,7 @@ export const Admin = () => {
             >
               <Bug size={16} className="sm:w-[18px] sm:h-[18px]" />
               <span className="hidden xs:inline">Debug</span>
-              <span className="xs:hidden">Bug</span>
-            </button>
-            <button
-              onClick={() => setCurrentView('setup')}
-              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-all duration-200 text-xs sm:text-sm ${
-                currentView === 'setup'
-                  ? 'bg-green-600 text-white shadow-md'
-                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
-              }`}
-            >
-              <Database size={16} className="sm:w-[18px] sm:h-[18px]" />
-              <span className="hidden xs:inline">Setup</span>
-              <span className="xs:hidden">Setup</span>
-            </button>
-            <button
-              onClick={() => setCurrentView('stripe')}
-              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-all duration-200 text-xs sm:text-sm ${
-                currentView === 'stripe'
-                  ? 'bg-purple-600 text-white shadow-md'
-                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
-              }`}
-            >
-              <Database size={16} className="sm:w-[18px] sm:h-[18px]" />
-              <span className="hidden xs:inline">Stripe</span>
-              <span className="xs:hidden">💳</span>
-            </button>
-            <button
-              onClick={() => setCurrentView('fix')}
-              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-all duration-200 text-xs sm:text-sm ${
-                currentView === 'fix'
-                  ? 'bg-orange-600 text-white shadow-md'
-                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
-              }`}
-            >
-              <Database size={16} className="sm:w-[18px] sm:h-[18px]" />
-              <span className="hidden xs:inline">Corriger DB</span>
-              <span className="xs:hidden">Fix</span>
+              <span className="xs:hidden">🔧</span>
             </button>
           </div>
         </div>
@@ -271,23 +235,46 @@ export const Admin = () => {
         ) : currentView === 'storage' ? (
           <StorageManager />
         ) : currentView === 'debug' ? (
-          <DebugSupabase />
-        ) : currentView === 'setup' ? (
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-            <h3 className="text-xl font-bold mb-4">Configuration Supabase</h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              ✅ Supabase est correctement configuré. Variables d'environnement présentes.
-            </p>
+          <div className="space-y-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <Bug className="text-red-600" />
+                Centre de Debug & Configuration
+              </h3>
+              
+              {/* Section Supabase */}
+              <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                <h4 className="font-semibold text-green-800 dark:text-green-300 mb-2">✅ Configuration Supabase</h4>
+                <p className="text-green-700 dark:text-green-400 text-sm">
+                  Supabase est correctement configuré. Variables d'environnement présentes.
+                </p>
+              </div>
+              
+              {/* Section Stripe */}
+              <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <h4 className="font-semibold text-blue-800 dark:text-blue-300 mb-2">✅ Configuration Stripe</h4>
+                <p className="text-blue-700 dark:text-blue-400 text-sm">
+                  Stripe est correctement configuré. Paiements fonctionnels.
+                </p>
+              </div>
+            </div>
+            
+            {/* Section Database Debug */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+              <h4 className="font-semibold text-orange-800 dark:text-orange-300 mb-4 flex items-center gap-2">
+                🛠️ Debug Supabase
+              </h4>
+              <DebugSupabase />
+            </div>
+            
+            {/* Section Database Fixer */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+              <h4 className="font-semibold text-purple-800 dark:text-purple-300 mb-4 flex items-center gap-2">
+                🔧 Correcteur de Base de Données
+              </h4>
+              <DatabaseFixer />
+            </div>
           </div>
-        ) : currentView === 'stripe' ? (
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-            <h3 className="text-xl font-bold mb-4">Configuration Stripe</h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              ✅ Stripe est correctement configuré. Paiements fonctionnels.
-            </p>
-          </div>
-        ) : currentView === 'fix' ? (
-          <DatabaseFixer />
         ) : (
           <div className="space-y-6">
             {/* Header */}
