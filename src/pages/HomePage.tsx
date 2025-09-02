@@ -263,22 +263,22 @@ export const HomePage = () => {
   const getCategoryIcon = (iconName: string, isSelected: boolean) => {
     // Couleurs harmonieuses pour chaque catégorie
     const colorPalettes = [
-      'bg-gradient-to-br from-blue-500 to-blue-600',
-      'bg-gradient-to-br from-emerald-500 to-teal-600', 
-      'bg-gradient-to-br from-purple-500 to-violet-600',
-      'bg-gradient-to-br from-orange-500 to-red-500',
-      'bg-gradient-to-br from-pink-500 to-rose-600',
-      'bg-gradient-to-br from-indigo-500 to-blue-600',
-      'bg-gradient-to-br from-green-500 to-emerald-600',
-      'bg-gradient-to-br from-yellow-500 to-orange-500',
-      'bg-gradient-to-br from-cyan-500 to-blue-500',
-      'bg-gradient-to-br from-red-500 to-pink-500',
-      'bg-gradient-to-br from-violet-500 to-purple-600',
-      'bg-gradient-to-br from-teal-500 to-cyan-600',
-      'bg-gradient-to-br from-amber-500 to-orange-600',
-      'bg-gradient-to-br from-lime-500 to-green-600',
-      'bg-gradient-to-br from-fuchsia-500 to-pink-600',
-      'bg-gradient-to-br from-slate-500 to-gray-600'
+      'bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-600',
+      'bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-600', 
+      'bg-gradient-to-br from-purple-400 via-violet-500 to-purple-600',
+      'bg-gradient-to-br from-orange-400 via-red-500 to-pink-600',
+      'bg-gradient-to-br from-pink-400 via-rose-500 to-red-600',
+      'bg-gradient-to-br from-indigo-400 via-blue-500 to-purple-600',
+      'bg-gradient-to-br from-green-400 via-emerald-500 to-teal-600',
+      'bg-gradient-to-br from-yellow-400 via-orange-500 to-red-600',
+      'bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600',
+      'bg-gradient-to-br from-red-400 via-pink-500 to-purple-600',
+      'bg-gradient-to-br from-violet-400 via-purple-500 to-indigo-600',
+      'bg-gradient-to-br from-teal-400 via-cyan-500 to-blue-600',
+      'bg-gradient-to-br from-amber-400 via-orange-500 to-red-600',
+      'bg-gradient-to-br from-lime-400 via-green-500 to-emerald-600',
+      'bg-gradient-to-br from-fuchsia-400 via-pink-500 to-purple-600',
+      'bg-gradient-to-br from-slate-400 via-gray-500 to-slate-600'
     ];
 
     // Icônes variées pour chaque catégorie
@@ -633,12 +633,12 @@ export const HomePage = () => {
                     }`}
                     onClick={() => setSelectedCategory(null)}
                   >
-                    <div className={`w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 rounded-full flex items-center justify-center text-white text-xl sm:text-2xl shadow-lg transition-all duration-300 ${
+                    <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center text-white shadow-lg transition-all duration-300 ${
                       !selectedCategory 
-                        ? 'bg-gradient-to-br from-purple-500 to-indigo-600 shadow-xl scale-110' 
-                        : 'bg-gradient-to-br from-gray-400 to-gray-500 hover:scale-105'
+                        ? 'bg-gradient-to-br from-purple-500 via-pink-500 to-indigo-600 shadow-xl scale-110' 
+                        : 'bg-gradient-to-br from-slate-400 via-gray-500 to-slate-600 hover:scale-105'
                     }`}>
-                      <Eye className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
+                      <Eye className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
                     </div>
                     <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 text-center max-w-16 sm:max-w-20">
                       Toutes
@@ -655,8 +655,8 @@ export const HomePage = () => {
                       }`}
                       onClick={() => setSelectedCategory(category.id)}
                     >
-                      <div className={`w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 ${color} rounded-full flex items-center justify-center text-white transition-all duration-300`}>
-                        <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
+                      <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 ${color} rounded-full flex items-center justify-center text-white transition-all duration-300`}>
+                        <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
                       </div>
                       <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 text-center max-w-16 sm:max-w-20">
                         {category.name}
