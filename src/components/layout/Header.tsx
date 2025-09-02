@@ -33,25 +33,35 @@ export const Header = () => {
     if (item.isPage) {
       navigate(item.href);
     } else {
-      // Si nous ne sommes pas sur la page d'accueil, naviguer d'abord vers la page d'accueil
+      // Fermer le menu mobile d'abord
+      setIsMenuOpen(false);
+      
+      // Fonction pour scroller vers l'élément
+      const scrollToElement = () => {
+        const element = document.querySelector(item.href);
+        if (element) {
+          // Calculer l'offset pour tenir compte du header sticky
+          const headerHeight = 64; // hauteur du header (h-16 = 64px)
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = elementPosition - headerHeight;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      };
+      
+      // Si nous ne sommes pas sur la page d'accueil, naviguer d'abord
       if (location.pathname !== '/') {
         navigate('/', { replace: true });
         // Attendre que la navigation soit terminée puis scroller
-        setTimeout(() => {
-          const element = document.querySelector(item.href);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }, 100);
+        setTimeout(scrollToElement, 200);
       } else {
         // Si nous sommes déjà sur la page d'accueil, scroller directement
-        const element = document.querySelector(item.href);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        setTimeout(scrollToElement, 100);
       }
     }
-    setIsMenuOpen(false);
   };
 
   const handleAdminClick = () => {
