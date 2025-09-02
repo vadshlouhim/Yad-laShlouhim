@@ -26,8 +26,28 @@ serve(async (req) => {
       }
     )
 
-    const { operation, data } = await req.json()
-    console.log('🔧 Opération admin:', operation, data)
+    // Gérer FormData pour les uploads d'images
+    const contentType = req.headers.get('content-type') ?? ''
+    let operation, data
+
+    if (contentType.includes('multipart/form-data')) {
+      // Traitement FormData pour UPLOAD_IMAGE
+      const formData = await req.formData()
+      operation = formData.get('operation') as string
+      
+      if (operation === 'UPLOAD_IMAGE') {
+        const file = formData.get('file') as File
+        const fileName = formData.get('fileName') as string
+        data = { file, fileName }
+      }
+    } else {
+      // Traitement JSON pour les autres opérations
+      const body = await req.json()
+      operation = body.operation
+      data = body.data
+    }
+
+    console.log('🔧 Opération admin:', operation, data?.fileName ? { fileName: data.fileName } : data)
 
     switch (operation) {
       case 'CREATE_POSTER':
@@ -125,19 +145,29 @@ serve(async (req) => {
       case 'UPLOAD_IMAGE':
         // Upload d'image via Service Role
         const { file, fileName } = data
+        const filePath = `affiches/${fileName}` // Organiser dans un sous-dossier
+        
+        console.log('📤 Upload Edge Function:', { fileName, fileSize: file?.size })
         
         const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
           .from('Affiches')
-          .upload(fileName, file, {
+          .upload(filePath, file, {
             cacheControl: '3600',
             upsert: true
           })
 
-        if (uploadError) throw uploadError
+        if (uploadError) {
+          console.error('❌ Erreur upload Edge Function:', uploadError)
+          throw uploadError
+        }
+
+        console.log('✅ Upload Edge Function réussi:', uploadData)
 
         const { data: urlData } = supabaseAdmin.storage
           .from('Affiches')
-          .getPublicUrl(fileName)
+          .getPublicUrl(filePath)
+
+        console.log('🔗 URL publique Edge Function:', urlData.publicUrl)
 
         return new Response(JSON.stringify({ 
           success: true, 

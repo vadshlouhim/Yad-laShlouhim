@@ -1,6 +1,6 @@
 import { useState, useRef, DragEvent, ChangeEvent } from 'react';
 import { Upload, X, Image as ImageIcon, AlertCircle, CheckCircle } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { adminOperations } from '../../lib/adminOperations';
 import { Button } from '../ui/Button';
 
 interface ImageUploadProps {
@@ -27,73 +27,18 @@ export const ImageUpload = ({ onImageUploaded, currentImageUrl, className = '' }
 
   const uploadImage = async (file: File): Promise<string> => {
     const fileName = generateFileName(file.name);
-    const filePath = `affiches/${fileName}`; // Organiser dans un sous-dossier
+    
+    console.log('📤 Upload via Edge Function:', { fileName, fileSize: file.size });
 
-    if (!supabase) {
-      throw new Error('Supabase n\'est pas configuré. Vérifiez les variables d\'environnement.');
+    try {
+      // Upload via Edge Function admin-operations qui contourne RLS
+      const imageUrl = await adminOperations.uploadImage(file, fileName);
+      console.log('✅ Upload réussi via Edge Function:', imageUrl);
+      return imageUrl;
+    } catch (error) {
+      console.error('❌ Erreur upload via Edge Function:', error);
+      throw error;
     }
-
-    console.log('📤 Upload vers Supabase Storage:', { fileName, fileSize: file.size });
-
-    // Upload vers Supabase Storage
-    const { data, error } = await supabase.storage
-      .from('Affiches')
-      .upload(filePath, file, {
-        cacheControl: '3600',
-        upsert: true // Permettre l'écrasement si le fichier existe
-      });
-
-    if (error) {
-      console.error('❌ Erreur upload:', error);
-      
-      // Gestion spécifique des erreurs courantes
-      if (error.message.includes('already exists')) {
-        // Essayer avec un nouveau nom de fichier
-        const newFileName = generateFileName(file.name);
-        const newFilePath = `affiches/${newFileName}`;
-        
-        const { data: retryData, error: retryError } = await supabase.storage
-          .from('Affiches')
-          .upload(newFilePath, file, {
-            cacheControl: '3600',
-            upsert: false
-          });
-          
-        if (retryError) {
-          throw new Error(`Erreur d'upload (retry): ${retryError.message}`);
-        }
-        
-        console.log('✅ Upload réussi (retry):', retryData);
-        
-        // Obtenir l'URL publique pour le retry
-        const { data: retryUrlData } = supabase.storage
-          .from('Affiches')
-          .getPublicUrl(newFilePath);
-
-        if (!retryUrlData?.publicUrl) {
-          throw new Error('Impossible d\'obtenir l\'URL publique (retry)');
-        }
-
-        console.log('🔗 URL publique générée (retry):', retryUrlData.publicUrl);
-        return retryUrlData.publicUrl;
-      } else {
-        throw new Error(`Erreur d'upload: ${error.message}`);
-      }
-    }
-
-    console.log('✅ Upload réussi:', data);
-
-    // Obtenir l'URL publique
-    const { data: urlData } = supabase.storage
-      .from('Affiches')
-      .getPublicUrl(filePath);
-
-    if (!urlData?.publicUrl) {
-      throw new Error('Impossible d\'obtenir l\'URL publique');
-    }
-
-    console.log('🔗 URL publique générée:', urlData.publicUrl);
-    return urlData.publicUrl;
   };
 
   const handleFileSelect = async (file: File) => {
