@@ -58,46 +58,28 @@ export const Success = () => {
       
       setPurchase(purchase);
       
-      // NOUVEAU: Enregistrer l'achat dans Supabase directement côté client
+      // NOUVEAU: Enregistrer l'achat dans Supabase via Edge Function (contourne RLS)
       try {
         console.log('💾 Enregistrement de l\'achat dans Supabase...');
         
-        // Import dynamique de Supabase
-        const { createClient } = await import('@supabase/supabase-js');
-        const supabase = createClient(
-          import.meta.env.VITE_SUPABASE_URL!,
-          import.meta.env.VITE_SUPABASE_ANON_KEY!
-        );
+        const saveResponse = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/save-purchase`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+          },
+          body: JSON.stringify({ 
+            sessionId,
+            stripeData: data 
+          })
+        });
 
-        // Vérifier si l'achat existe déjà
-        const { data: existingPurchase } = await supabase
-          .from('purchases')
-          .select('id')
-          .eq('stripe_session_id', sessionId)
-          .maybeSingle();
-
-        if (!existingPurchase) {
-          // Créer l'enregistrement d'achat
-          const purchaseData = {
-            stripe_session_id: sessionId,
-            poster_id: data.metadata?.poster_id || 'unknown',
-            customer_email: data.customer_email || data.metadata?.customer_email,
-            status: 'completed',
-            receipt_url: data.receipt_url || null,
-            canva_link: data.metadata?.canva_link || purchase.canva_link
-          };
-
-          const { error: insertError } = await supabase
-            .from('purchases')
-            .insert(purchaseData);
-
-          if (insertError) {
-            console.error('⚠️ Erreur insertion:', insertError);
-          } else {
-            console.log('✅ Achat enregistré avec succès');
-          }
+        if (saveResponse.ok) {
+          const saveResult = await saveResponse.json();
+          console.log('✅ Achat enregistré:', saveResult);
         } else {
-          console.log('ℹ️ Achat déjà existant');
+          const saveError = await saveResponse.json();
+          console.error('⚠️ Erreur sauvegarde:', saveError);
         }
       } catch (saveError) {
         console.error('⚠️ Erreur enregistrement (non bloquant):', saveError);
