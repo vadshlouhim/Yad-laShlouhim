@@ -261,52 +261,101 @@ export const HomePage = () => {
 
   // Fonction pour obtenir l'icône et la couleur d'une catégorie
   const getCategoryIcon = (iconName: string, isSelected: boolean) => {
-    // Couleurs dégradées uniques pour chaque catégorie
-    const colorPalettes = [
-      'bg-gradient-to-br from-pink-500 via-rose-500 to-purple-600 shadow-lg shadow-pink-500/40',
-      'bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 shadow-lg shadow-blue-500/40',
-      'bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-600 shadow-lg shadow-emerald-500/40',
-      'bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-600 shadow-lg shadow-orange-500/40',
-      'bg-gradient-to-br from-red-500 via-pink-500 to-rose-600 shadow-lg shadow-red-500/40',
-      'bg-gradient-to-br from-violet-500 via-purple-500 to-indigo-600 shadow-lg shadow-violet-500/40',
-      'bg-gradient-to-br from-green-500 via-lime-500 to-emerald-600 shadow-lg shadow-green-500/40',
-      'bg-gradient-to-br from-yellow-500 via-orange-500 to-red-500 shadow-lg shadow-yellow-500/40',
-      'bg-gradient-to-br from-cyan-500 via-sky-500 to-blue-600 shadow-lg shadow-cyan-500/40',
-      'bg-gradient-to-br from-purple-500 via-fuchsia-500 to-pink-600 shadow-lg shadow-purple-500/40',
-      'bg-gradient-to-br from-indigo-500 via-blue-500 to-cyan-600 shadow-lg shadow-indigo-500/40',
-      'bg-gradient-to-br from-teal-500 via-emerald-500 to-green-600 shadow-lg shadow-teal-500/40',
-      'bg-gradient-to-br from-amber-500 via-yellow-500 to-orange-600 shadow-lg shadow-amber-500/40',
-      'bg-gradient-to-br from-lime-500 via-green-500 to-teal-600 shadow-lg shadow-lime-500/40',
-      'bg-gradient-to-br from-fuchsia-500 via-pink-500 to-red-600 shadow-lg shadow-fuchsia-500/40',
-      'bg-gradient-to-br from-slate-500 via-gray-500 to-zinc-600 shadow-lg shadow-slate-500/40'
-    ];
-
-    // Icônes variées pour chaque catégorie
-    const iconMap: Record<string, { icon: any, colorIndex: number }> = {
-      'Calendar': { icon: Calendar, colorIndex: 0 },
-      'Star': { icon: Star, colorIndex: 1 },
-      'Sparkles': { icon: Sparkles, colorIndex: 2 },
-      'Heart': { icon: Heart, colorIndex: 3 },
-      'PartyPopper': { icon: PartyPopper, colorIndex: 4 },
-      'Moon': { icon: Moon, colorIndex: 5 },
-      'Zap': { icon: Zap, colorIndex: 6 },
-      'BookOpen': { icon: BookOpen, colorIndex: 7 },
-      'GraduationCap': { icon: GraduationCap, colorIndex: 8 },
-      'Users': { icon: Users, colorIndex: 9 },
-      'Gift': { icon: Gift, colorIndex: 10 },
-      'FileText': { icon: FileText, colorIndex: 11 },
-      'Magnet': { icon: Magnet, colorIndex: 12 },
-      'Crown': { icon: Crown, colorIndex: 13 },
-      'Music': { icon: Music, colorIndex: 14 },
-      'Folder': { icon: Folder, colorIndex: 15 }
+    // Mapping des icônes avec couleurs dégradées uniques et modernes
+    const iconMap: Record<string, { icon: any, gradient: string, shadow: string }> = {
+      'Calendar': { 
+        icon: Calendar, 
+        gradient: 'bg-gradient-to-br from-rose-400 via-pink-500 to-purple-600', 
+        shadow: 'shadow-lg shadow-pink-500/30' 
+      },
+      'Star': { 
+        icon: Star, 
+        gradient: 'bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-600', 
+        shadow: 'shadow-lg shadow-blue-500/30' 
+      },
+      'Sparkles': { 
+        icon: Sparkles, 
+        gradient: 'bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500', 
+        shadow: 'shadow-lg shadow-orange-500/30' 
+      },
+      'Heart': { 
+        icon: Heart, 
+        gradient: 'bg-gradient-to-br from-red-400 via-pink-500 to-rose-600', 
+        shadow: 'shadow-lg shadow-red-500/30' 
+      },
+      'PartyPopper': { 
+        icon: PartyPopper, 
+        gradient: 'bg-gradient-to-br from-purple-400 via-violet-500 to-indigo-600', 
+        shadow: 'shadow-lg shadow-purple-500/30' 
+      },
+      'Moon': { 
+        icon: Moon, 
+        gradient: 'bg-gradient-to-br from-indigo-400 via-blue-500 to-cyan-600', 
+        shadow: 'shadow-lg shadow-indigo-500/30' 
+      },
+      'Zap': { 
+        icon: Zap, 
+        gradient: 'bg-gradient-to-br from-yellow-400 via-amber-500 to-orange-600', 
+        shadow: 'shadow-lg shadow-yellow-500/30' 
+      },
+      'BookOpen': { 
+        icon: BookOpen, 
+        gradient: 'bg-gradient-to-br from-emerald-400 via-green-500 to-teal-600', 
+        shadow: 'shadow-lg shadow-emerald-500/30' 
+      },
+      'GraduationCap': { 
+        icon: GraduationCap, 
+        gradient: 'bg-gradient-to-br from-cyan-400 via-sky-500 to-blue-600', 
+        shadow: 'shadow-lg shadow-cyan-500/30' 
+      },
+      'Users': { 
+        icon: Users, 
+        gradient: 'bg-gradient-to-br from-green-400 via-emerald-500 to-teal-600', 
+        shadow: 'shadow-lg shadow-green-500/30' 
+      },
+      'Gift': { 
+        icon: Gift, 
+        gradient: 'bg-gradient-to-br from-pink-400 via-rose-500 to-red-600', 
+        shadow: 'shadow-lg shadow-pink-500/30' 
+      },
+      'FileText': { 
+        icon: FileText, 
+        gradient: 'bg-gradient-to-br from-slate-400 via-gray-500 to-zinc-600', 
+        shadow: 'shadow-lg shadow-slate-500/30' 
+      },
+      'Magnet': { 
+        icon: Magnet, 
+        gradient: 'bg-gradient-to-br from-red-400 via-orange-500 to-amber-600', 
+        shadow: 'shadow-lg shadow-red-500/30' 
+      },
+      'Crown': { 
+        icon: Crown, 
+        gradient: 'bg-gradient-to-br from-amber-400 via-yellow-500 to-orange-600', 
+        shadow: 'shadow-lg shadow-amber-500/30' 
+      },
+      'Music': { 
+        icon: Music, 
+        gradient: 'bg-gradient-to-br from-violet-400 via-purple-500 to-fuchsia-600', 
+        shadow: 'shadow-lg shadow-violet-500/30' 
+      },
+      'Folder': { 
+        icon: Folder, 
+        gradient: 'bg-gradient-to-br from-gray-400 via-slate-500 to-gray-600', 
+        shadow: 'shadow-lg shadow-gray-500/30' 
+      }
     };
 
-    const categoryData = iconMap[iconName] || { icon: Star, colorIndex: 0 };
-    const baseColor = colorPalettes[categoryData.colorIndex % colorPalettes.length];
+    const categoryData = iconMap[iconName] || { 
+      icon: Star, 
+      gradient: 'bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-600', 
+      shadow: 'shadow-lg shadow-blue-500/30' 
+    };
     
     return {
       icon: categoryData.icon,
-      color: isSelected ? `${baseColor} scale-110 ring-4 ring-white/30` : `${baseColor} hover:scale-105 hover:shadow-xl`
+      color: isSelected 
+        ? `${categoryData.gradient} ${categoryData.shadow} scale-110 ring-4 ring-white/30` 
+        : `${categoryData.gradient} ${categoryData.shadow} hover:scale-105 hover:shadow-xl`
     };
   };
 
