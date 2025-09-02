@@ -671,8 +671,8 @@ export const HomePage = () => {
                   {hasMoreCategories && (
                     <Button
                       onClick={showMoreCategories}
-                      variant="outline"
-                      className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                      size="sm"
+                      className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white border-0"
                     >
                       Voir plus de catégories
                     </Button>
@@ -681,8 +681,8 @@ export const HomePage = () => {
                   {visibleCategoriesCount > 4 && (
                     <Button
                       onClick={showLessCategories}
-                      variant="outline"
-                      className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                      size="sm"
+                      className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white border-0"
                     >
                       Voir moins
                     </Button>
