@@ -453,7 +453,7 @@ export const HomePage = () => {
       </section>
 
       {/* Call to Action Button */}
-      <section className="py-12 bg-white dark:bg-gray-900">
+      <section className="py-6 bg-white dark:bg-gray-900">
         <Container>
           <div className="text-center">
             <Button
@@ -463,10 +463,10 @@ export const HomePage = () => {
                   element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
               }}
-              size="lg"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              size="md"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 px-6 py-3 text-base font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
             >
-              <Eye className="w-6 h-6 mr-3" />
+              <Eye className="w-5 h-5 mr-2" />
               Découvrir nos affiches
             </Button>
           </div>
