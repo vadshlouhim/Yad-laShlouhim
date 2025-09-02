@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Save, X, Upload, AlertCircle } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
+import { adminOperations } from '../../lib/adminOperations';
 import { Category, Poster } from '../../types';
 import { Button } from '../ui/Button';
 import { ImageUpload } from './ImageUpload';
@@ -132,25 +133,14 @@ export const PosterForm = ({ poster, onSave, onCancel }: PosterFormProps) => {
     setErrors({});
 
     try {
-      if (!supabase) {
-        throw new Error('Supabase n\'est pas configuré');
-      }
-      
-      console.log('💾 Sauvegarde de l\'affiche:', formData);
+      console.log('💾 Sauvegarde de l\'affiche via Edge Function:', formData);
       
       if (poster) {
         console.log('🔄 Modification de l\'affiche:', poster.id);
-        const { error } = await supabase
-          .from('posters')
-          .update(formData)
-          .eq('id', poster.id);
-        if (error) throw error;
+        await adminOperations.updatePoster(poster.id, formData);
       } else {
         console.log('➕ Création d\'une nouvelle affiche');
-        const { error } = await supabase
-          .from('posters')
-          .insert([formData]);
-        if (error) throw error;
+        await adminOperations.createPoster(formData);
       }
 
       console.log('✅ Sauvegarde réussie');

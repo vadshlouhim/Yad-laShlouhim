@@ -13,6 +13,7 @@ import { DebugSupabase } from '../components/admin/DebugSupabase';
 import { DatabaseFixer } from '../components/admin/DatabaseFixer';
 // SupabaseSetup et StripeSetup supprimés lors du nettoyage - composants temporaires pour admin
 import { supabase } from '../lib/supabase';
+import { adminOperations } from '../lib/adminOperations';
 import { Poster } from '../types';
 
 type AdminView = 'posters' | 'categories' | 'featured' | 'storage' | 'debug';
@@ -85,18 +86,9 @@ export const Admin = () => {
 
   const handleDeletePoster = async (id: string) => {
     try {
-      if (!supabase) {
-        throw new Error('Supabase n\'est pas configuré');
-      }
+      console.log('🗑️ Suppression de l\'affiche via Edge Function:', id);
       
-      console.log('🗑️ Suppression de l\'affiche:', id);
-      
-      const { error } = await supabase
-        .from('posters')
-        .delete()
-        .eq('id', id);
-      
-      if (error) throw error;
+      await adminOperations.deletePoster(id);
       
       console.log('✅ Affiche supprimée avec succès');
       loadPosters();
@@ -108,18 +100,9 @@ export const Admin = () => {
 
   const handleTogglePublish = async (poster: Poster) => {
     try {
-      if (!supabase) {
-        throw new Error('Supabase n\'est pas configuré');
-      }
+      console.log('👁️ Basculer la publication via Edge Function:', { id: poster.id, currentStatus: poster.is_published, newStatus: !poster.is_published });
       
-      console.log('👁️ Basculer la publication:', { id: poster.id, currentStatus: poster.is_published, newStatus: !poster.is_published });
-      
-      const { error } = await supabase
-        .from('posters')
-        .update({ is_published: !poster.is_published })
-        .eq('id', poster.id);
-      
-      if (error) throw error;
+      await adminOperations.togglePublished(poster.id, !poster.is_published);
       
       console.log('✅ Statut de publication mis à jour');
       loadPosters();

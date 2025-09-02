@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Star, StarOff, Eye, RefreshCw, AlertCircle } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
+import { adminOperations } from '../../lib/adminOperations';
 import { Poster } from '../../types';
 import { Button } from '../ui/Button';
 
@@ -51,41 +52,14 @@ export const FeaturedPostersManager = () => {
   };
 
   const toggleFeatured = async (posterId: string, currentFeaturedStatus: boolean) => {
-    // Vérifier la limite de 4 affiches favorites avant d'ajouter
-    if (!currentFeaturedStatus && featuredPosters.length >= 4) {
-      alert('Vous ne pouvez avoir que 4 affiches favorites maximum. Retirez d\'abord une affiche des favorites.');
-      return;
-    }
-
-    if (!supabase) {
-      alert('Erreur : Supabase n\'est pas configuré');
-      return;
-    }
-
     setUpdating(posterId);
     
     try {
-      console.log('🔄 Tentative de mise à jour favoris:', { posterId, currentFeaturedStatus, newStatus: !currentFeaturedStatus });
+      console.log('🔄 Mise à jour favoris via Edge Function:', { posterId, currentFeaturedStatus, newStatus: !currentFeaturedStatus });
       
-      const { data, error } = await supabase
-        .from('posters')
-        .update({ is_featured: !currentFeaturedStatus })
-        .eq('id', posterId)
-        .select();
-
-      if (error) {
-        console.error('Erreur Supabase:', error);
-        
-        // Gestion spécifique des erreurs de limite
-        if (error.message.includes('4 affiches favorites maximum')) {
-          alert('Limite atteinte : Vous ne pouvez avoir que 4 affiches favorites maximum. Retirez d\'abord une affiche des favorites.');
-        } else {
-          alert(`Erreur lors de la mise à jour: ${error.message}`);
-        }
-        return;
-      }
-
-      console.log('Mise à jour réussie:', data);
+      await adminOperations.toggleFeatured(posterId, !currentFeaturedStatus);
+      
+      console.log('✅ Favoris mis à jour avec succès');
       
       // Recharger les données
       await loadPosters();
@@ -95,8 +69,8 @@ export const FeaturedPostersManager = () => {
       console.log(`✅ Affiche ${action} favorites`);
       
     } catch (error) {
-      console.error('Error updating featured status:', error);
-      alert(`Erreur lors de la mise à jour: ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
+      console.error('❌ Erreur mise à jour favoris:', error);
+      alert(`Erreur: ${error.message || error}`);
     } finally {
       setUpdating(null);
     }
