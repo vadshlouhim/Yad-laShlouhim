@@ -57,6 +57,22 @@ export const Success = () => {
       };
       
       setPurchase(purchase);
+      
+      // NOUVEAU: Enregistrer l'achat dans Supabase via une fonction dédiée
+      try {
+        console.log('💾 Enregistrement de l\'achat dans Supabase...');
+        await fetch('/.netlify/functions/savePurchase', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            sessionId,
+            stripeData: data 
+          })
+        });
+        console.log('✅ Achat enregistré avec succès');
+      } catch (saveError) {
+        console.error('⚠️ Erreur enregistrement (non bloquant):', saveError);
+      }
     } catch (error) {
       console.error('❌ Erreur complète:', error);
       
