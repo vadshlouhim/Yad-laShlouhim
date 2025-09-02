@@ -418,463 +418,463 @@ export const HomePage = () => {
 
       <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
       
-      {/* Hero Section */}
-      <section id="hero" className="py-12 sm:py-16 lg:py-20 animate-fade-in">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
-            {/* Left Side - Title and Slogan */}
-            <div className="text-center lg:text-left px-4 sm:px-0">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-tight">
-                <span className="text-gray-900 dark:text-white block sm:inline">Yad</span>{' '}
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent block sm:inline">
-                  La'Shlouhim
-                </span>
-              </h1>
-              <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-lg mx-auto lg:mx-0">
-                + de 150 modèles d'affiches personnalisables avec Canva en quelques secondes
-              </p>
-            </div>
-
-            {/* Right Side - Posters Carousel */}
-            <div className="flex flex-col items-center">
-              <div className="text-center mb-12">
-                <div className="inline-block">
-                  <h2 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-                    Les affiches du moment
-                  </h2>
-                  <div className="w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full shadow-lg"></div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 mt-4 text-lg">
+        {/* Hero Section */}
+        <section id="hero" className="py-12 sm:py-16 lg:py-20 animate-fade-in">
+          <Container>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
+              {/* Left Side - Title and Slogan */}
+              <div className="text-center lg:text-left px-4 sm:px-0">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-tight">
+                  <span className="text-gray-900 dark:text-white block sm:inline">Yad</span>{' '}
+                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent block sm:inline">
+                    La'Shlouhim
+                  </span>
+                </h1>
+                <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-lg mx-auto lg:mx-0">
+                  + de 150 modèles d'affiches personnalisables avec Canva en quelques secondes
                 </p>
               </div>
 
-              {loading ? (
-                <div className="flex gap-2 sm:gap-4 lg:gap-8 justify-center">
-                  <div className="w-40 sm:w-56 lg:w-80 h-52 sm:h-72 lg:h-96 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-lg"></div>
-                  <div className="w-40 sm:w-56 lg:w-80 h-52 sm:h-72 lg:h-96 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-lg"></div>
-                </div>
-              ) : featuredPosters.length > 0 ? (
-                <div className="relative">
-                  {featuredPosters.length > 2 && (
-                    <>
-                      <button
-                        onClick={prevPosters}
-                        className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-6 sm:-translate-x-12 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-white dark:bg-gray-800 rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
-                      >
-                        <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" />
-                      </button>
-                      <button
-                        onClick={nextPosters}
-                        className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-6 sm:translate-x-12 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-white dark:bg-gray-800 rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
-                      >
-                        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" />
-                      </button>
-                    </>
-                  )}
-
-                  <div className="flex gap-2 sm:gap-4 lg:gap-6 justify-center">
-                    {renderHeroPosterCard(featuredPosters[0], 0)}
-                    {featuredPosters.length > 1 && renderHeroPosterCard(featuredPosters[1], 1)}
+              {/* Right Side - Posters Carousel */}
+              <div className="flex flex-col items-center">
+                <div className="text-center mb-12">
+                  <div className="inline-block">
+                    <h2 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+                      Les affiches du moment
+                    </h2>
+                    <div className="w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full shadow-lg"></div>
                   </div>
-
-                  {featuredPosters.length > 2 && (
-                    <div className="flex justify-center gap-2 mt-6">
-                      {Array.from({ length: Math.ceil(featuredPosters.length / 2) }, (_, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentIndex(index * 2)}
-                          className={`w-3 h-3 rounded-full transition-colors duration-200 ${
-                            Math.floor(currentIndex / 2) === index ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  )}
+                  <p className="text-gray-600 dark:text-gray-400 mt-4 text-lg">
+                  </p>
                 </div>
-              ) : (
-                <div className="text-center text-gray-500 dark:text-gray-400">
-                  <p>Aucune affiche disponible pour le moment</p>
+
+                {loading ? (
+                  <div className="flex gap-2 sm:gap-4 lg:gap-8 justify-center">
+                    <div className="w-40 sm:w-56 lg:w-80 h-52 sm:h-72 lg:h-96 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-lg"></div>
+                    <div className="w-40 sm:w-56 lg:w-80 h-52 sm:h-72 lg:h-96 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-lg"></div>
+                  </div>
+                ) : featuredPosters.length > 0 ? (
+                  <div className="relative">
+                    {featuredPosters.length > 2 && (
+                      <>
+                        <button
+                          onClick={prevPosters}
+                          className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-6 sm:-translate-x-12 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-white dark:bg-gray-800 rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                        >
+                          <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" />
+                        </button>
+                        <button
+                          onClick={nextPosters}
+                          className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-6 sm:translate-x-12 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-white dark:bg-gray-800 rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                        >
+                          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" />
+                        </button>
+                      </>
+                    )}
+
+                    <div className="flex gap-2 sm:gap-4 lg:gap-6 justify-center">
+                      {renderHeroPosterCard(featuredPosters[0], 0)}
+                      {featuredPosters.length > 1 && renderHeroPosterCard(featuredPosters[1], 1)}
+                    </div>
+
+                    {featuredPosters.length > 2 && (
+                      <div className="flex justify-center gap-2 mt-6">
+                        {Array.from({ length: Math.ceil(featuredPosters.length / 2) }, (_, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setCurrentIndex(index * 2)}
+                            className={`w-3 h-3 rounded-full transition-colors duration-200 ${
+                              Math.floor(currentIndex / 2) === index ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-center text-gray-500 dark:text-gray-400">
+                    <p>Aucune affiche disponible pour le moment</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* Call to Action Button */}
+        <section className="py-6 bg-white dark:bg-gray-900">
+          <Container>
+            <div className="text-center">
+              <Button
+                onClick={() => {
+                  const element = document.querySelector('#gallery');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
+                size="md"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 px-6 py-3 text-base font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              >
+                <Eye className="w-5 h-5 mr-2" />
+                Découvrir nos affiches
+              </Button>
+            </div>
+          </Container>
+        </section>
+
+        {/* How It Works Section */}
+        <section id="how-it-works" className="py-12 bg-white dark:bg-gray-900">
+          <Container>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent mb-4">
+                Comment ça marche ?
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Step 1 */}
+              <div className="text-center group">
+                <div className="relative mb-6">
+                  <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 transform group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-white text-2xl font-bold">1</span>
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                  Choisissez votre affiche
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Parcourez notre galerie et sélectionnez l'affiche qui correspond à votre événement
+                </p>
+              </div>
+
+              {/* Step 2 */}
+              <div className="text-center group">
+                <div className="relative mb-6">
+                  <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 transform group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-white text-2xl font-bold">2</span>
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                  Achetez et personnalisez
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Effectuez votre achat sécurisé et recevez immédiatement le lien Canva pour personnaliser
+                </p>
+              </div>
+
+              {/* Step 3 */}
+              <div className="text-center group">
+                <div className="relative mb-6">
+                  <div className="w-20 h-20 bg-gradient-to-r from-pink-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4 transform group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-white text-2xl font-bold">3</span>
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                  Téléchargez et partagez
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Personnalisez sur Canva, téléchargez en haute qualité et partagez votre création
+                </p>
+              </div>
+            </div>
+
+            {/* Features */}
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 hidden md:grid">
+              <div className="text-center p-6 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow duration-300">
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">⚡</span>
+                </div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Accès instantané</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Lien Canva envoyé immédiatement</p>
+              </div>
+
+              <div className="text-center p-6 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow duration-300">
+                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🎨</span>
+                </div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Personnalisation facile</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Interface Canva intuitive</p>
+              </div>
+
+              <div className="text-center p-6 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow duration-300">
+                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">📐</span>
+                </div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Mise en page préservée</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Design professionnel garanti</p>
+              </div>
+
+              <div className="text-center p-6 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow duration-300">
+                <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">💫</span>
+                </div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Qualité premium</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Résolution haute définition</p>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* Posters Gallery Section */}
+        <section id="gallery" className="py-12 sm:py-16 lg:py-20 bg-gray-50 dark:bg-gray-800">
+          <Container>
+            {/* Services Button Section */}
+            <div className="text-center mb-12 sm:mb-16">
+              <a 
+                href="https://linktr.ee/Yadshlouhim" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-block"
+              >
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white border-0 px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                >
+                  Tous nos services
+                </Button>
+              </a>
+              <p className="text-gray-600 dark:text-gray-400 mt-4 text-lg">
+                Yad la-Shlouhim propose également d'autres services dédiés aux Shlouhim
+              </p>
+            </div>
+
+            {/* Categories Filter */}
+            <div className="mb-12 sm:mb-16">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent text-center mb-6 sm:mb-8 px-4 sm:px-0">
+                Nos affiches
+              </h2>
+              
+              {/* Barre de recherche style Apple */}
+              <div className="mb-8 sm:mb-12">
+                <SearchBar
+                  posters={posters}
+                  categories={categories}
+                  onSearch={handleSearch}
+                  placeholder="Rechercher une affiche, catégorie..."
+                />
+              </div>
+              
+              {/* Affichage des résultats de recherche */}
+              {searchTerm.trim() && (
+                <div className="text-center mb-8">
+                  <div className="inline-flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium">
+                    <span>🔍</span>
+                    <span>
+                      {searchResults.length} résultat{searchResults.length > 1 ? 's' : ''} pour "{searchTerm}"
+                    </span>
+                    <button 
+                      onClick={() => handleSearch([], '')}
+                      className="ml-2 hover:bg-blue-100 dark:hover:bg-blue-800 rounded-full p-1 transition-colors"
+                    >
+                      <span className="text-xs">✕</span>
+                    </button>
+                  </div>
                 </div>
               )}
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* Call to Action Button */}
-      <section className="py-6 bg-white dark:bg-gray-900">
-        <Container>
-          <div className="text-center">
-            <Button
-              onClick={() => {
-                const element = document.querySelector('#gallery');
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-              }}
-              size="md"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 px-6 py-3 text-base font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-            >
-              <Eye className="w-5 h-5 mr-2" />
-              Découvrir nos affiches
-            </Button>
-          </div>
-        </Container>
-      </section>
-
-      {/* How It Works Section */}
-      <section id="how-it-works" className="py-12 bg-white dark:bg-gray-900">
-        <Container>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent mb-4">
-              Comment ça marche ?
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Step 1 */}
-            <div className="text-center group">
-              <div className="relative mb-6">
-                <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-white text-2xl font-bold">1</span>
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                Choisissez votre affiche
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                Parcourez notre galerie et sélectionnez l'affiche qui correspond à votre événement
-              </p>
-            </div>
-
-            {/* Step 2 */}
-            <div className="text-center group">
-              <div className="relative mb-6">
-                <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-white text-2xl font-bold">2</span>
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                Achetez et personnalisez
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                Effectuez votre achat sécurisé et recevez immédiatement le lien Canva pour personnaliser
-              </p>
-            </div>
-
-            {/* Step 3 */}
-            <div className="text-center group">
-              <div className="relative mb-6">
-                <div className="w-20 h-20 bg-gradient-to-r from-pink-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-white text-2xl font-bold">3</span>
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                Téléchargez et partagez
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                Personnalisez sur Canva, téléchargez en haute qualité et partagez votre création
-              </p>
-            </div>
-          </div>
-
-          {/* Features */}
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 hidden md:grid">
-            <div className="text-center p-6 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow duration-300">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">⚡</span>
-              </div>
-              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Accès instantané</h4>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Lien Canva envoyé immédiatement</p>
-            </div>
-
-            <div className="text-center p-6 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow duration-300">
-              <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🎨</span>
-              </div>
-              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Personnalisation facile</h4>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Interface Canva intuitive</p>
-            </div>
-
-            <div className="text-center p-6 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow duration-300">
-              <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📐</span>
-              </div>
-              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Mise en page préservée</h4>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Design professionnel garanti</p>
-            </div>
-
-            <div className="text-center p-6 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow duration-300">
-              <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">💫</span>
-              </div>
-              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Qualité premium</h4>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Résolution haute définition</p>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* Posters Gallery Section */}
-      <section id="gallery" className="py-12 sm:py-16 lg:py-20 bg-gray-50 dark:bg-gray-800">
-        <Container>
-          {/* Services Button Section */}
-          <div className="text-center mb-12 sm:mb-16">
-            <a 
-              href="https://linktr.ee/Yadshlouhim" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-block"
-            >
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white border-0 px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-              >
-                Tous nos services
-              </Button>
-            </a>
-            <p className="text-gray-600 dark:text-gray-400 mt-4 text-lg">
-              Yad la-Shlouhim propose également d'autres services dédiés aux Shlouhim
-            </p>
-          </div>
-
-          {/* Categories Filter */}
-          <div className="mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent text-center mb-6 sm:mb-8 px-4 sm:px-0">
-              Nos affiches
-            </h2>
-            
-            {/* Barre de recherche style Apple */}
-            <div className="mb-8 sm:mb-12">
-              <SearchBar
-                posters={posters}
-                categories={categories}
-                onSearch={handleSearch}
-                placeholder="Rechercher une affiche, catégorie..."
-              />
-            </div>
-            
-            {/* Affichage des résultats de recherche */}
-            {searchTerm.trim() && (
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium">
-                  <span>🔍</span>
-                  <span>
-                    {searchResults.length} résultat{searchResults.length > 1 ? 's' : ''} pour "{searchTerm}"
-                  </span>
-                  <button 
-                    onClick={() => handleSearch([], '')}
-                    className="ml-2 hover:bg-blue-100 dark:hover:bg-blue-800 rounded-full p-1 transition-colors"
-                  >
-                    <span className="text-xs">✕</span>
-                  </button>
-                </div>
-              </div>
-            )}
-            
-            {/* Catégories - masquées lors d'une recherche active */}
-            {!searchTerm.trim() && (
-              <>
-                <div className="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-0">
-                  <div
-                    className={`flex flex-col items-center gap-2 sm:gap-3 cursor-pointer group transition-all duration-300 ${
-                      !selectedCategory ? 'scale-110' : 'hover:scale-105'
-                    }`}
-                    onClick={() => setSelectedCategory(null)}
-                  >
-                    <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center text-white shadow-lg transition-all duration-300 ${
-                      !selectedCategory 
-                          ? 'bg-gradient-to-br from-purple-500 via-pink-500 to-indigo-600 shadow-xl shadow-purple-500/50 scale-110' 
-                          : 'bg-gradient-to-br from-slate-400 via-gray-500 to-slate-600 shadow-slate-500/40 hover:scale-105'
-                    }`}>
-                      <Eye className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
-                    </div>
-                    <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 text-center max-w-16 sm:max-w-20">
-                      Toutes
-                    </span>
-                  </div>
-                
-                {visibleCategories.map((category) => {
-                  const { icon: IconComponent, color } = getCategoryIcon(category.icon, selectedCategory === category.id);
-                  return (
+              
+              {/* Catégories - masquées lors d'une recherche active */}
+              {!searchTerm.trim() && (
+                <>
+                  <div className="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-0">
                     <div
-                      key={category.id}
                       className={`flex flex-col items-center gap-2 sm:gap-3 cursor-pointer group transition-all duration-300 ${
-                        selectedCategory === category.id ? 'scale-110' : 'hover:scale-105'
+                        !selectedCategory ? 'scale-110' : 'hover:scale-105'
                       }`}
-                      onClick={() => setSelectedCategory(category.id)}
+                      onClick={() => setSelectedCategory(null)}
                     >
-                      <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 ${color} rounded-full flex items-center justify-center text-white transition-all duration-300`}>
-                        <IconComponent className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
+                      <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center text-white shadow-lg transition-all duration-300 ${
+                        !selectedCategory 
+                            ? 'bg-gradient-to-br from-purple-500 via-pink-500 to-indigo-600 shadow-xl shadow-purple-500/50 scale-110' 
+                            : 'bg-gradient-to-br from-slate-400 via-gray-500 to-slate-600 shadow-slate-500/40 hover:scale-105'
+                      }`}>
+                        <Eye className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
                       </div>
                       <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 text-center max-w-16 sm:max-w-20">
-                        {category.name}
+                        Toutes
                       </span>
                     </div>
-                  );
-                })}
+                  
+                    {visibleCategories.map((category) => {
+                      const { icon: IconComponent, color } = getCategoryIcon(category.icon, selectedCategory === category.id);
+                      return (
+                        <div
+                          key={category.id}
+                          className={`flex flex-col items-center gap-2 sm:gap-3 cursor-pointer group transition-all duration-300 ${
+                            selectedCategory === category.id ? 'scale-110' : 'hover:scale-105'
+                          }`}
+                          onClick={() => setSelectedCategory(category.id)}
+                        >
+                          <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 ${color} rounded-full flex items-center justify-center text-white transition-all duration-300`}>
+                            <IconComponent className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
+                          </div>
+                          <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 text-center max-w-16 sm:max-w-20">
+                            {category.name}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Boutons pour les catégories */}
+                  <div className="flex justify-center gap-4 mt-8">
+                    {hasMoreCategories && (
+                      <Button
+                        onClick={showMoreCategories}
+                        size="sm"
+                        className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white border-0"
+                      >
+                        Voir plus de catégories
+                      </Button>
+                    )}
+                    
+                    {visibleCategoriesCount > 4 && (
+                      <Button
+                        onClick={showLessCategories}
+                        size="sm"
+                        className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white border-0"
+                      >
+                        Voir moins
+                      </Button>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Posters Grid - Gallery Style */}
+            {loading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {Array.from({ length: 8 }, (_, i) => (
+                  <div key={i} className="animate-pulse">
+                    <div className="bg-gray-200 dark:bg-gray-700 rounded-2xl aspect-[4/5]" />
+                  </div>
+                ))}
+              </div>
+            ) : searchTerm.trim() && searchResults.length === 0 ? (
+              // Aucun résultat de recherche
+              <div className="text-center py-20">
+                <div className="text-gray-400 mb-4">
+                  <span className="text-6xl opacity-30">🔍</span>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-600 dark:text-gray-400 mb-2">
+                  Aucun résultat trouvé
+                </h3>
+                <p className="text-gray-500 dark:text-gray-500 mb-6">
+                  Aucune affiche trouvée pour "{searchTerm}"
+                </p>
+                <div className="space-y-3 text-sm text-gray-400">
+                  <p>💡 Conseils de recherche :</p>
+                  <div className="flex flex-wrap justify-center gap-4 max-w-md mx-auto">
+                    <span className="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">Vérifiez l'orthographe</span>
+                    <span className="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">Utilisez des mots-clés simples</span>
+                    <span className="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">Essayez une catégorie</span>
+                  </div>
+                </div>
+                <div className="mt-8">
+                  <Button 
+                    onClick={() => handleSearch([], '')}
+                    variant="secondary"
+                  >
+                    Voir toutes les affiches
+                  </Button>
+                </div>
+              </div>
+            ) : visiblePosters.length > 0 ? (
+              <>
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-0">
+                  {visiblePosters.map((poster) => (
+                    <div key={poster.id} className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105">
+                      {/* Poster Image */}
+                      <div className="relative aspect-[4/5] overflow-hidden">
+                        {poster.image_url ? (
+                          <img
+                            src={poster.image_url}
+                            alt={poster.title}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 flex items-center justify-center">
+                            <span className="text-4xl opacity-50">📄</span>
+                          </div>
+                        )}
+                        
+                        {/* Price Overlay - Appears on hover */}
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                          <div className="flex items-center justify-between">
+                            <span className="text-white text-lg font-semibold">
+                              {formatPrice(poster.price_cents, poster.currency)}
+                            </span>
+                            <Button
+                              onClick={() => openPurchaseModal(poster)}
+                              size="sm"
+                              className="bg-white text-gray-900 hover:bg-gray-100 border-0"
+                            >
+                              <ShoppingBag className="w-4 h-4 mr-2" />
+                              Acheter
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
-                {/* Boutons pour les catégories */}
-                <div className="flex justify-center gap-4 mt-8">
-                  {hasMoreCategories && (
+                {/* Boutons pour les affiches */}
+                <div className="flex justify-center gap-4 mt-12">
+                  {hasMorePosters && (
                     <Button
-                      onClick={showMoreCategories}
-                      size="sm"
-                      className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white border-0"
+                      onClick={showMorePosters}
+                      size="lg"
+                      className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0"
                     >
-                      Voir plus de catégories
+                      <ArrowRight className="w-5 h-5 mr-2" />
+                      Voir plus d'affiches
                     </Button>
                   )}
                   
-                  {visibleCategoriesCount > 4 && (
+                  {visiblePostersCount > 4 && (
                     <Button
-                      onClick={showLessCategories}
-                      size="sm"
-                      className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white border-0"
+                      onClick={showLessPosters}
+                      size="lg"
+                      variant="outline"
+                      className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                     >
                       Voir moins
                     </Button>
                   )}
                 </div>
               </>
-            )}
-          </div>
-
-          {/* Posters Grid - Gallery Style */}
-          {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {Array.from({ length: 8 }, (_, i) => (
-                <div key={i} className="animate-pulse">
-                  <div className="bg-gray-200 dark:bg-gray-700 rounded-2xl aspect-[4/5]" />
-                </div>
-              ))}
-            </div>
-          ) : searchTerm.trim() && searchResults.length === 0 ? (
-            // Aucun résultat de recherche
-            <div className="text-center py-20">
-              <div className="text-gray-400 mb-4">
-                <span className="text-6xl opacity-30">🔍</span>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-600 dark:text-gray-400 mb-2">
-                Aucun résultat trouvé
-              </h3>
-              <p className="text-gray-500 dark:text-gray-500 mb-6">
-                Aucune affiche trouvée pour "{searchTerm}"
-              </p>
-              <div className="space-y-3 text-sm text-gray-400">
-                <p>💡 Conseils de recherche :</p>
-                <div className="flex flex-wrap justify-center gap-4 max-w-md mx-auto">
-                  <span className="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">Vérifiez l'orthographe</span>
-                  <span className="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">Utilisez des mots-clés simples</span>
-                  <span className="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">Essayez une catégorie</span>
-                </div>
-              </div>
-              <div className="mt-8">
-                <Button 
-                  onClick={() => handleSearch([], '')}
-                  variant="secondary"
-                >
-                  Voir toutes les affiches
-                </Button>
-              </div>
-            </div>
-          ) : visiblePosters.length > 0 ? (
-            <>
-              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-0">
-                {visiblePosters.map((poster) => (
-                  <div key={poster.id} className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105">
-                    {/* Poster Image */}
-                    <div className="relative aspect-[4/5] overflow-hidden">
-                      {poster.image_url ? (
-                        <img
-                          src={poster.image_url}
-                          alt={poster.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 flex items-center justify-center">
-                          <span className="text-4xl opacity-50">📄</span>
-                        </div>
-                      )}
-                      
-                      {/* Price Overlay - Appears on hover */}
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                        <div className="flex items-center justify-between">
-                          <span className="text-white text-lg font-semibold">
-                            {formatPrice(poster.price_cents, poster.currency)}
-                          </span>
-                          <Button
-                            onClick={() => openPurchaseModal(poster)}
-                            size="sm"
-                            className="bg-white text-gray-900 hover:bg-gray-100 border-0"
-                          >
-                            <ShoppingBag className="w-4 h-4 mr-2" />
-                            Acheter
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
+            ) : (
+              <div className="text-center py-12">
+                <div className="text-gray-400 dark:text-gray-600 mb-4">
+                  <div className="w-24 h-24 mx-auto bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
+                    📋
                   </div>
-                ))}
-              </div>
-
-              {/* Boutons pour les affiches */}
-              <div className="flex justify-center gap-4 mt-12">
-                {hasMorePosters && (
-                  <Button
-                    onClick={showMorePosters}
-                    size="lg"
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0"
-                  >
-                    <ArrowRight className="w-5 h-5 mr-2" />
-                    Voir plus d'affiches
-                  </Button>
-                )}
-                
-                {visiblePostersCount > 4 && (
-                  <Button
-                    onClick={showLessPosters}
-                    size="lg"
-                    variant="outline"
-                    className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
-                  >
-                    Voir moins
-                  </Button>
-                )}
-              </div>
-            </>
-          ) : (
-            <div className="text-center py-12">
-              <div className="text-gray-400 dark:text-gray-600 mb-4">
-                <div className="w-24 h-24 mx-auto bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
-                  📋
                 </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  Aucune affiche trouvée
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Essayez de modifier vos filtres ou votre recherche.
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                Aucune affiche trouvée
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Essayez de modifier vos filtres ou votre recherche.
+            )}
+          </Container>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="py-16 bg-white dark:bg-gray-900">
+          <Container>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                Parlons de votre Projet
+              </h2>
+              <p className="text-xl text-gray-600 dark:text-gray-400">
+                Une idée d'affiche personnalisée ? Contactez-nous !
               </p>
             </div>
-          )}
-        </Container>
-      </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-16 bg-white dark:bg-gray-900">
-        <Container>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Parlons de votre Projet
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
-              Une idée d'affiche personnalisée ? Contactez-nous !
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
               {/* Left Panel - Contact and Service Information */}
               <div className="space-y-8">
                 <div className="flex items-start gap-4">
@@ -1000,80 +1000,79 @@ export const HomePage = () => {
                 )}
               </div>
             </div>
-          </div>
-        </Container>
-      </section>
+          </Container>
+        </section>
 
-      {/* FAQ Section - SEO Content */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
-        <Container>
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-              Questions fréquentes
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-12">
-              Trouvez rapidement les réponses à vos questions sur nos affiches Canva
-            </p>
+        {/* FAQ Section - SEO Content */}
+        <section className="py-16 bg-gray-50 dark:bg-gray-800">
+          <Container>
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+                Questions fréquentes
+              </h2>
+              <p className="text-xl text-gray-600 dark:text-gray-400 mb-12">
+                Trouvez rapidement les réponses à vos questions sur nos affiches Canva
+              </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              <div className="bg-white dark:bg-gray-900 rounded-xl p-6 text-left">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                  Comment fonctionne le paiement ?
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Paiement 100% sécurisé via Stripe. Accès immédiat à votre modèle Canva après validation.
-                </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div className="bg-white dark:bg-gray-900 rounded-xl p-6 text-left">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    Comment fonctionne le paiement ?
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Paiement 100% sécurisé via Stripe. Accès immédiat à votre modèle Canva après validation.
+                  </p>
+                </div>
+
+                <div className="bg-white dark:bg-gray-900 rounded-xl p-6 text-left">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    Puis-je personnaliser les modèles ?
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Oui ! Tous nos modèles sont 100% personnalisables : textes, couleurs, polices, images.
+                  </p>
+                </div>
+
+                <div className="bg-white dark:bg-gray-900 rounded-xl p-6 text-left">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    Quel est le délai de livraison ?
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Accès instantané ! Votre lien Canva est envoyé immédiatement après le paiement.
+                  </p>
+                </div>
+
+                <div className="bg-white dark:bg-gray-900 rounded-xl p-6 text-left">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    Puis-je réutiliser le modèle ?
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Bien sûr ! Usage illimité de votre modèle pour tous vos événements.
+                  </p>
+                </div>
               </div>
 
-              <div className="bg-white dark:bg-gray-900 rounded-xl p-6 text-left">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                  Puis-je personnaliser les modèles ?
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Oui ! Tous nos modèles sont 100% personnalisables : textes, couleurs, polices, images.
-                </p>
-              </div>
-
-              <div className="bg-white dark:bg-gray-900 rounded-xl p-6 text-left">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                  Quel est le délai de livraison ?
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Accès instantané ! Votre lien Canva est envoyé immédiatement après le paiement.
-                </p>
-              </div>
-
-              <div className="bg-white dark:bg-gray-900 rounded-xl p-6 text-left">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                  Puis-je réutiliser le modèle ?
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Bien sûr ! Usage illimité de votre modèle pour tous vos événements.
-                </p>
-              </div>
+              <Link to="/faq">
+                <Button variant="outline" size="lg">
+                  <ExternalLink className="w-5 h-5 mr-2" />
+                  Voir toutes les questions
+                </Button>
+              </Link>
             </div>
+          </Container>
+        </section>
 
-            <Link to="/faq">
-              <Button variant="outline" size="lg">
-                <ExternalLink className="w-5 h-5 mr-2" />
-                Voir toutes les questions
-              </Button>
-            </Link>
-          </div>
-        </Container>
-      </section>
-
-      {/* Purchase Modal */}
-      {showPurchaseModal && selectedPosterForPurchase && (
-        <PurchaseModal
-          posterId={selectedPosterForPurchase.id}
-          posterImage={selectedPosterForPurchase.image_url}
-          posterTitle={selectedPosterForPurchase.title}
-          priceLabel={formatPrice(selectedPosterForPurchase.price_cents, selectedPosterForPurchase.currency)}
-          onClose={() => setShowPurchaseModal(false)}
-        />
-      )}
-    </div>
+        {/* Purchase Modal */}
+        {showPurchaseModal && selectedPosterForPurchase && (
+          <PurchaseModal
+            posterId={selectedPosterForPurchase.id}
+            posterImage={selectedPosterForPurchase.image_url}
+            posterTitle={selectedPosterForPurchase.title}
+            priceLabel={formatPrice(selectedPosterForPurchase.price_cents, selectedPosterForPurchase.currency)}
+            onClose={() => setShowPurchaseModal(false)}
+          />
+        )}
+      </div>
     </>
   );
 };
