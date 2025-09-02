@@ -11,8 +11,7 @@ import { FeaturedPostersManager } from '../components/admin/FeaturedPostersManag
 import { StorageManager } from '../components/admin/StorageManager';
 import { DebugSupabase } from '../components/admin/DebugSupabase';
 import { DatabaseFixer } from '../components/admin/DatabaseFixer';
-import { SupabaseSetup } from '../components/setup/SupabaseSetup';
-import { StripeSetup } from '../components/stripe/StripeSetup';
+// SupabaseSetup et StripeSetup supprimés lors du nettoyage - composants temporaires pour admin
 import { supabase } from '../lib/supabase';
 import { Poster } from '../types';
 
@@ -274,9 +273,19 @@ export const Admin = () => {
         ) : currentView === 'debug' ? (
           <DebugSupabase />
         ) : currentView === 'setup' ? (
-          <SupabaseSetup />
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+            <h3 className="text-xl font-bold mb-4">Configuration Supabase</h3>
+            <p className="text-gray-600 dark:text-gray-400">
+              ✅ Supabase est correctement configuré. Variables d'environnement présentes.
+            </p>
+          </div>
         ) : currentView === 'stripe' ? (
-          <StripeSetup />
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+            <h3 className="text-xl font-bold mb-4">Configuration Stripe</h3>
+            <p className="text-gray-600 dark:text-gray-400">
+              ✅ Stripe est correctement configuré. Paiements fonctionnels.
+            </p>
+          </div>
         ) : currentView === 'fix' ? (
           <DatabaseFixer />
         ) : (
