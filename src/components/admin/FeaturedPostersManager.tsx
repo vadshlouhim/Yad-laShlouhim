@@ -16,6 +16,12 @@ export const FeaturedPostersManager = () => {
 
   const loadPosters = async () => {
     try {
+      if (!supabase) {
+        throw new Error('Supabase n\'est pas configuré');
+      }
+      
+      console.log('🔍 Chargement des affiches pour les favoris...');
+      
       const { data, error } = await supabase
         .from('posters')
         .select(`
@@ -51,10 +57,15 @@ export const FeaturedPostersManager = () => {
       return;
     }
 
+    if (!supabase) {
+      alert('Erreur : Supabase n\'est pas configuré');
+      return;
+    }
+
     setUpdating(posterId);
     
     try {
-      console.log('Tentative de mise à jour:', { posterId, currentFeaturedStatus, newStatus: !currentFeaturedStatus });
+      console.log('🔄 Tentative de mise à jour favoris:', { posterId, currentFeaturedStatus, newStatus: !currentFeaturedStatus });
       
       const { data, error } = await supabase
         .from('posters')

@@ -45,6 +45,11 @@ export const PosterForm = ({ poster, onSave, onCancel }: PosterFormProps) => {
   const loadCategories = async () => {
     try {
       console.log('🔍 Chargement des catégories...');
+      
+      if (!supabase) {
+        throw new Error('Supabase n\'est pas configuré');
+      }
+      
       const { data, error } = await supabase
         .from('categories')
         .select('*')
@@ -77,23 +82,32 @@ export const PosterForm = ({ poster, onSave, onCancel }: PosterFormProps) => {
     setLoading(true);
 
     try {
+      if (!supabase) {
+        throw new Error('Supabase n\'est pas configuré');
+      }
+      
+      console.log('💾 Sauvegarde de l\'affiche:', formData);
+      
       if (poster) {
+        console.log('🔄 Modification de l\'affiche:', poster.id);
         const { error } = await supabase
           .from('posters')
           .update(formData)
           .eq('id', poster.id);
         if (error) throw error;
       } else {
+        console.log('➕ Création d\'une nouvelle affiche');
         const { error } = await supabase
           .from('posters')
           .insert([formData]);
         if (error) throw error;
       }
 
+      console.log('✅ Sauvegarde réussie');
       onSave();
     } catch (error) {
-      console.error('Error saving poster:', error);
-      alert('Erreur lors de la sauvegarde');
+      console.error('❌ Erreur lors de la sauvegarde:', error);
+      alert(`Erreur lors de la sauvegarde: ${error.message || error}`);
     } finally {
       setLoading(false);
     }

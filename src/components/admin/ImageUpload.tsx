@@ -29,6 +29,12 @@ export const ImageUpload = ({ onImageUploaded, currentImageUrl, className = '' }
     const fileName = generateFileName(file.name);
     const filePath = fileName; // Pas de sous-dossier pour simplifier
 
+    if (!supabase) {
+      throw new Error('Supabase n\'est pas configuré. Vérifiez les variables d\'environnement.');
+    }
+
+    console.log('📤 Upload vers Supabase Storage:', { fileName, fileSize: file.size });
+
     // Upload vers Supabase Storage
     const { data, error } = await supabase.storage
       .from('Affiches')
@@ -38,8 +44,11 @@ export const ImageUpload = ({ onImageUploaded, currentImageUrl, className = '' }
       });
 
     if (error) {
+      console.error('❌ Erreur upload:', error);
       throw new Error(`Erreur d'upload: ${error.message}`);
     }
+
+    console.log('✅ Upload réussi:', data);
 
     // Obtenir l'URL publique
     const { data: urlData } = supabase.storage
@@ -50,6 +59,7 @@ export const ImageUpload = ({ onImageUploaded, currentImageUrl, className = '' }
       throw new Error('Impossible d\'obtenir l\'URL publique');
     }
 
+    console.log('🔗 URL publique générée:', urlData.publicUrl);
     return urlData.publicUrl;
   };
 

@@ -46,6 +46,12 @@ export const Admin = () => {
   const loadPosters = async () => {
     setLoading(true);
     try {
+      if (!supabase) {
+        throw new Error('Supabase n\'est pas configuré');
+      }
+      
+      console.log('📋 Chargement des affiches admin...');
+      
       const { data, error } = await supabase
         .from('posters')
         .select(`
@@ -55,9 +61,12 @@ export const Admin = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
+      
+      console.log(`✅ ${data?.length || 0} affiches chargées`);
       setPosters(data || []);
     } catch (error) {
-      console.error('Error loading posters:', error);
+      console.error('❌ Erreur lors du chargement des affiches:', error);
+      alert(`Erreur lors du chargement: ${error.message || error}`);
     } finally {
       setLoading(false);
     }
@@ -76,31 +85,47 @@ export const Admin = () => {
 
   const handleDeletePoster = async (id: string) => {
     try {
+      if (!supabase) {
+        throw new Error('Supabase n\'est pas configuré');
+      }
+      
+      console.log('🗑️ Suppression de l\'affiche:', id);
+      
       const { error } = await supabase
         .from('posters')
         .delete()
         .eq('id', id);
       
       if (error) throw error;
+      
+      console.log('✅ Affiche supprimée avec succès');
       loadPosters();
     } catch (error) {
-      console.error('Error deleting poster:', error);
-      alert('Erreur lors de la suppression');
+      console.error('❌ Erreur lors de la suppression:', error);
+      alert(`Erreur lors de la suppression: ${error.message || error}`);
     }
   };
 
   const handleTogglePublish = async (poster: Poster) => {
     try {
+      if (!supabase) {
+        throw new Error('Supabase n\'est pas configuré');
+      }
+      
+      console.log('👁️ Basculer la publication:', { id: poster.id, currentStatus: poster.is_published, newStatus: !poster.is_published });
+      
       const { error } = await supabase
         .from('posters')
         .update({ is_published: !poster.is_published })
         .eq('id', poster.id);
       
       if (error) throw error;
+      
+      console.log('✅ Statut de publication mis à jour');
       loadPosters();
     } catch (error) {
-      console.error('Error updating poster:', error);
-      alert('Erreur lors de la mise à jour');
+      console.error('❌ Erreur lors de la mise à jour:', error);
+      alert(`Erreur lors de la mise à jour: ${error.message || error}`);
     }
   };
 
