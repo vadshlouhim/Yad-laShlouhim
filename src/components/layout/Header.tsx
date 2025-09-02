@@ -180,7 +180,7 @@ export const Header = () => {
                 alt="Logo"
                 className="w-8 h-8 object-contain"
               />
-              <span className="text-lg font-semibold text-gray-900 dark:text-white">Menu</span>
+              <span className="text-base font-semibold text-gray-900 dark:text-white">Menu</span>
             </div>
             <button
               onClick={() => setIsMenuOpen(false)}
@@ -197,7 +197,7 @@ export const Header = () => {
                 <button
                   key={item.name}
                   onClick={() => handleNavigation(item)}
-                  className={`group block w-full text-left px-4 py-4 rounded-xl text-base font-medium transition-all duration-200 transform hover:scale-[0.98] active:scale-95 ${
+                  className={`group block w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 transform hover:scale-[0.98] active:scale-95 ${
                     item.isGradient
                       ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30'
                       : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
@@ -222,7 +222,7 @@ export const Header = () => {
             <div className="pt-6 mt-6 border-t border-gray-200/50 dark:border-gray-700/50">
               <button 
                 onClick={handleAdminClick}
-                className="w-full flex items-center gap-3 px-4 py-4 bg-gradient-to-r from-gray-600 to-gray-700 dark:from-gray-700 dark:to-gray-800 text-white rounded-xl shadow-lg shadow-gray-500/25 hover:shadow-xl hover:shadow-gray-500/30 transition-all duration-200 transform hover:scale-[0.98] active:scale-95"
+                className="w-full flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-gray-600 to-gray-700 dark:from-gray-700 dark:to-gray-800 text-white rounded-xl shadow-lg shadow-gray-500/25 hover:shadow-xl hover:shadow-gray-500/30 transition-all duration-200 transform hover:scale-[0.98] active:scale-95"
                 style={{
                   animationDelay: `${navigation.length * 50 + 100}ms`
                 }}
@@ -231,7 +231,7 @@ export const Header = () => {
                   <div className="p-2 bg-white/10 rounded-lg">
                     <Settings className="w-4 h-4" />
                   </div>
-                  <span className="font-medium">Administration</span>
+                  <span className="font-medium text-sm">Administration</span>
                 </div>
                 <div className="w-2 h-2 rounded-full bg-white/50" />
               </button>
