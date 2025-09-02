@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Settings } from 'lucide-react';
+import { Menu, X, Settings, ExternalLink } from 'lucide-react';
 import { Container } from '../ui/Container';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { AdminGate } from '../admin/AdminGate';
@@ -226,6 +226,28 @@ export const Header = () => {
                   </div>
                 </button>
               ))}
+            </div>
+            
+            {/* Section Services */}
+            <div className="pt-4 mt-4 border-t border-gray-200/50 dark:border-gray-700/50">
+              <a
+                href="https://linktr.ee/Yadshlouhim"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsMenuOpen(false)}
+                className="w-full flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-700 dark:from-green-700 dark:to-emerald-800 text-white rounded-xl shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30 transition-all duration-200 transform hover:scale-[0.98] active:scale-95"
+                style={{
+                  animationDelay: `${navigation.length * 50 + 50}ms`
+                }}
+              >
+                <div className="flex items-center gap-3 flex-1">
+                  <div className="p-2 bg-white/10 rounded-lg">
+                    <ExternalLink className="w-4 h-4" />
+                  </div>
+                  <span className="font-medium text-sm">Tous nos services</span>
+                </div>
+                <div className="w-2 h-2 rounded-full bg-white/50" />
+              </a>
             </div>
             
             {/* Section Admin */}
