@@ -95,8 +95,8 @@ export const handler: Handler = async (event, context) => {
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.SITE_URL || 'http://localhost:3000'}/achat/succes?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.SITE_URL || 'http://localhost:3000'}/achat/annule`,
+      success_url: `${process.env.SITE_URL || 'http://localhost:3000'}/achat/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.SITE_URL || 'http://localhost:3000'}/achat/cancelled`,
       customer_email: customerData.customer_email,
       metadata: {
         poster_id: posterId,

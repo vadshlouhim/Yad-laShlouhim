@@ -17,7 +17,9 @@ function App() {
           <Route path="/news" element={<News />} />
           <Route path="/news/:slug" element={<NewsArticlePage />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/achat/success" element={<Success />} />
           <Route path="/achat/succes" element={<Success />} />
+          <Route path="/achat/cancelled" element={<Cancelled />} />
           <Route path="/achat/annule" element={<Cancelled />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
