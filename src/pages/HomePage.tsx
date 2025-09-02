@@ -570,6 +570,26 @@ export const HomePage = () => {
       {/* Posters Gallery Section */}
       <section id="gallery" className="py-12 sm:py-16 lg:py-20 bg-gray-50 dark:bg-gray-800">
         <Container>
+          {/* Services Button Section */}
+          <div className="text-center mb-12 sm:mb-16">
+            <a 
+              href="https://linktr.ee/Yadshlouhim" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-block"
+            >
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white border-0 px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              >
+                Tous nos services
+              </Button>
+            </a>
+            <p className="text-gray-600 dark:text-gray-400 mt-4 text-lg">
+              Yad la-Shlouhim propose également d'autres services dédiés aux Shlouhim
+            </p>
+          </div>
+
           {/* Categories Filter */}
           <div className="mb-12 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent text-center mb-6 sm:mb-8 px-4 sm:px-0">
