@@ -263,22 +263,22 @@ export const HomePage = () => {
   const getCategoryIcon = (iconName: string, isSelected: boolean) => {
     // Couleurs harmonieuses pour chaque catégorie
     const colorPalettes = [
-      'bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-600',
-      'bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-600', 
-      'bg-gradient-to-br from-purple-400 via-violet-500 to-purple-600',
-      'bg-gradient-to-br from-orange-400 via-red-500 to-pink-600',
-      'bg-gradient-to-br from-pink-400 via-rose-500 to-red-600',
-      'bg-gradient-to-br from-indigo-400 via-blue-500 to-purple-600',
-      'bg-gradient-to-br from-green-400 via-emerald-500 to-teal-600',
-      'bg-gradient-to-br from-yellow-400 via-orange-500 to-red-600',
-      'bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600',
-      'bg-gradient-to-br from-red-400 via-pink-500 to-purple-600',
-      'bg-gradient-to-br from-violet-400 via-purple-500 to-indigo-600',
-      'bg-gradient-to-br from-teal-400 via-cyan-500 to-blue-600',
-      'bg-gradient-to-br from-amber-400 via-orange-500 to-red-600',
-      'bg-gradient-to-br from-lime-400 via-green-500 to-emerald-600',
-      'bg-gradient-to-br from-fuchsia-400 via-pink-500 to-purple-600',
-      'bg-gradient-to-br from-slate-400 via-gray-500 to-slate-600'
+      'bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 shadow-lg shadow-blue-500/30',
+      'bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-600 shadow-lg shadow-emerald-500/30', 
+      'bg-gradient-to-br from-purple-500 via-violet-500 to-fuchsia-600 shadow-lg shadow-purple-500/30',
+      'bg-gradient-to-br from-orange-500 via-red-500 to-pink-600 shadow-lg shadow-orange-500/30',
+      'bg-gradient-to-br from-pink-500 via-rose-500 to-red-600 shadow-lg shadow-pink-500/30',
+      'bg-gradient-to-br from-indigo-500 via-blue-500 to-purple-600 shadow-lg shadow-indigo-500/30',
+      'bg-gradient-to-br from-green-500 via-emerald-500 to-teal-600 shadow-lg shadow-green-500/30',
+      'bg-gradient-to-br from-yellow-500 via-orange-500 to-red-600 shadow-lg shadow-yellow-500/30',
+      'bg-gradient-to-br from-cyan-500 via-blue-500 to-indigo-600 shadow-lg shadow-cyan-500/30',
+      'bg-gradient-to-br from-red-500 via-pink-500 to-purple-600 shadow-lg shadow-red-500/30',
+      'bg-gradient-to-br from-violet-500 via-purple-500 to-indigo-600 shadow-lg shadow-violet-500/30',
+      'bg-gradient-to-br from-teal-500 via-cyan-500 to-blue-600 shadow-lg shadow-teal-500/30',
+      'bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 shadow-lg shadow-amber-500/30',
+      'bg-gradient-to-br from-lime-500 via-green-500 to-emerald-600 shadow-lg shadow-lime-500/30',
+      'bg-gradient-to-br from-fuchsia-500 via-pink-500 to-purple-600 shadow-lg shadow-fuchsia-500/30',
+      'bg-gradient-to-br from-slate-500 via-gray-500 to-slate-600 shadow-lg shadow-slate-500/30'
     ];
 
     // Icônes variées pour chaque catégorie
@@ -306,7 +306,7 @@ export const HomePage = () => {
     
     return {
       icon: categoryData.icon,
-      color: isSelected ? `${baseColor} shadow-lg scale-110` : `${baseColor} hover:scale-105`
+      color: isSelected ? `${baseColor} scale-110 ring-4 ring-white/20` : `${baseColor} hover:scale-105 hover:shadow-xl`
     };
   };
 
