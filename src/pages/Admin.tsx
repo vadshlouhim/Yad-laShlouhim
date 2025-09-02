@@ -129,6 +129,57 @@ export const Admin = () => {
     }
   };
 
+  const handleToggleFeatured = async (poster: Poster) => {
+    try {
+      if (!supabase) {
+        throw new Error('Supabase n\'est pas configuré');
+      }
+      
+      // Vérifier la limite de 4 affiches favorites avant d'ajouter
+      if (!poster.is_featured) {
+        const { data: featuredCount, error: countError } = await supabase
+          .from('posters')
+          .select('id', { count: 'exact' })
+          .eq('is_featured', true);
+          
+        if (countError) {
+          throw countError;
+        }
+        
+        if ((featuredCount?.length || 0) >= 4) {
+          alert('Vous ne pouvez avoir que 4 affiches favorites maximum. Retirez d\'abord une affiche des favorites.');
+          return;
+        }
+      }
+      
+      console.log('⭐ Basculer le statut favori:', { id: poster.id, currentStatus: poster.is_featured, newStatus: !poster.is_featured });
+      
+      const { error } = await supabase
+        .from('posters')
+        .update({ is_featured: !poster.is_featured })
+        .eq('id', poster.id);
+      
+      if (error) {
+        if (error.message.includes('4 affiches favorites maximum')) {
+          alert('Limite atteinte : Vous ne pouvez avoir que 4 affiches favorites maximum.');
+        } else {
+          throw error;
+        }
+        return;
+      }
+      
+      console.log('✅ Statut favori mis à jour');
+      loadPosters();
+      
+      // Message de confirmation
+      const action = !poster.is_featured ? 'ajoutée aux' : 'retirée des';
+      console.log(`✅ Affiche ${action} favorites`);
+      
+    } catch (error) {
+      console.error('❌ Erreur lors de la mise à jour des favoris:', error);
+      alert(`Erreur lors de la mise à jour: ${error.message || error}`);
+    }
+  };
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
@@ -332,6 +383,7 @@ export const Admin = () => {
                 onEdit={handleEditPoster}
                 onDelete={handleDeletePoster}
                 onTogglePublish={handleTogglePublish}
+                onToggleFeatured={handleToggleFeatured}
               />
             )}
           </div>

@@ -27,7 +27,7 @@ export const ImageUpload = ({ onImageUploaded, currentImageUrl, className = '' }
 
   const uploadImage = async (file: File): Promise<string> => {
     const fileName = generateFileName(file.name);
-    const filePath = fileName; // Pas de sous-dossier pour simplifier
+    const filePath = `affiches/${fileName}`; // Organiser dans un sous-dossier
 
     if (!supabase) {
       throw new Error('Supabase n\'est pas configuré. Vérifiez les variables d\'environnement.');
@@ -40,12 +40,45 @@ export const ImageUpload = ({ onImageUploaded, currentImageUrl, className = '' }
       .from('Affiches')
       .upload(filePath, file, {
         cacheControl: '3600',
-        upsert: false
+        upsert: true // Permettre l'écrasement si le fichier existe
       });
 
     if (error) {
       console.error('❌ Erreur upload:', error);
-      throw new Error(`Erreur d'upload: ${error.message}`);
+      
+      // Gestion spécifique des erreurs courantes
+      if (error.message.includes('already exists')) {
+        // Essayer avec un nouveau nom de fichier
+        const newFileName = generateFileName(file.name);
+        const newFilePath = `affiches/${newFileName}`;
+        
+        const { data: retryData, error: retryError } = await supabase.storage
+          .from('Affiches')
+          .upload(newFilePath, file, {
+            cacheControl: '3600',
+            upsert: false
+          });
+          
+        if (retryError) {
+          throw new Error(`Erreur d'upload (retry): ${retryError.message}`);
+        }
+        
+        console.log('✅ Upload réussi (retry):', retryData);
+        
+        // Obtenir l'URL publique pour le retry
+        const { data: retryUrlData } = supabase.storage
+          .from('Affiches')
+          .getPublicUrl(newFilePath);
+
+        if (!retryUrlData?.publicUrl) {
+          throw new Error('Impossible d\'obtenir l\'URL publique (retry)');
+        }
+
+        console.log('🔗 URL publique générée (retry):', retryUrlData.publicUrl);
+        return retryUrlData.publicUrl;
+      } else {
+        throw new Error(`Erreur d'upload: ${error.message}`);
+      }
     }
 
     console.log('✅ Upload réussi:', data);

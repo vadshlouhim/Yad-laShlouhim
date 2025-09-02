@@ -75,16 +75,28 @@ export const FeaturedPostersManager = () => {
 
       if (error) {
         console.error('Erreur Supabase:', error);
-        throw error;
+        
+        // Gestion spécifique des erreurs de limite
+        if (error.message.includes('4 affiches favorites maximum')) {
+          alert('Limite atteinte : Vous ne pouvez avoir que 4 affiches favorites maximum. Retirez d\'abord une affiche des favorites.');
+        } else {
+          alert(`Erreur lors de la mise à jour: ${error.message}`);
+        }
+        return;
       }
 
       console.log('Mise à jour réussie:', data);
       
       // Recharger les données
       await loadPosters();
+      
+      // Afficher un message de succès
+      const action = !currentFeaturedStatus ? 'ajoutée aux' : 'retirée des';
+      console.log(`✅ Affiche ${action} favorites`);
+      
     } catch (error) {
       console.error('Error updating featured status:', error);
-      alert(`Erreur lors de la mise à jour: ${error.message}. Vérifiez que la colonne is_featured existe dans la table posters.`);
+      alert(`Erreur lors de la mise à jour: ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
     } finally {
       setUpdating(null);
     }

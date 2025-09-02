@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Edit2, Trash2, Eye, EyeOff } from 'lucide-react';
+import { Edit2, Trash2, Eye, EyeOff, Star, StarOff } from 'lucide-react';
 import { Poster } from '../../types';
 
 interface PosterTableProps {
@@ -7,9 +7,10 @@ interface PosterTableProps {
   onEdit: (poster: Poster) => void;
   onDelete: (id: string) => void;
   onTogglePublish: (poster: Poster) => void;
+  onToggleFeatured?: (poster: Poster) => void;
 }
 
-export const PosterTable = ({ posters, onEdit, onDelete, onTogglePublish }: PosterTableProps) => {
+export const PosterTable = ({ posters, onEdit, onDelete, onTogglePublish, onToggleFeatured }: PosterTableProps) => {
   const formatPrice = (cents: number, currency: string) => {
     return new Intl.NumberFormat('fr-FR', {
       style: 'currency',
@@ -23,6 +24,11 @@ export const PosterTable = ({ posters, onEdit, onDelete, onTogglePublish }: Post
     }
   };
 
+  const handleToggleFeatured = (poster: Poster) => {
+    if (onToggleFeatured) {
+      onToggleFeatured(poster);
+    }
+  };
   if (posters.length === 0) {
     return (
       <div className="text-center py-12">
@@ -71,6 +77,15 @@ export const PosterTable = ({ posters, onEdit, onDelete, onTogglePublish }: Post
                     >
                       {poster.is_published ? <Eye size={16} /> : <EyeOff size={16} />}
                     </button>
+                    {onToggleFeatured && (
+                      <button
+                        onClick={() => handleToggleFeatured(poster)}
+                        className={`p-1 ${poster.is_featured ? 'text-yellow-600' : 'text-gray-400'}`}
+                        title={poster.is_featured ? 'Retirer des favorites' : 'Ajouter aux favorites'}
+                      >
+                        {poster.is_featured ? <Star size={16} /> : <StarOff size={16} />}
+                      </button>
+                    )}
                     <button
                       onClick={() => handleDelete(poster.id, poster.title)}
                       className="p-1 text-red-600 hover:text-red-700"
@@ -90,6 +105,11 @@ export const PosterTable = ({ posters, onEdit, onDelete, onTogglePublish }: Post
                     }`}>
                       {poster.is_published ? 'Publié' : 'Brouillon'}
                     </span>
+                    {poster.is_featured && (
+                      <span className="ml-1 px-2 py-0.5 rounded-full text-xs bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400">
+                        ⭐ Favori
+                      </span>
+                    )}
                   </p>
                 </div>
               </div>
@@ -115,6 +135,9 @@ export const PosterTable = ({ posters, onEdit, onDelete, onTogglePublish }: Post
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                 Statut
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                Favori
               </th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                 Actions
@@ -163,17 +186,35 @@ export const PosterTable = ({ posters, onEdit, onDelete, onTogglePublish }: Post
                     {poster.is_published ? 'Publié' : 'Brouillon'}
                   </button>
                 </td>
+                <td className="px-6 py-4">
+                  {onToggleFeatured && (
+                    <button
+                      onClick={() => handleToggleFeatured(poster)}
+                      className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium transition-colors duration-200 ${
+                        poster.is_featured
+                          ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-300'
+                          : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                      }`}
+                      title={poster.is_featured ? 'Retirer des favorites' : 'Ajouter aux favorites'}
+                    >
+                      {poster.is_featured ? <Star size={12} /> : <StarOff size={12} />}
+                      {poster.is_featured ? 'Favori' : 'Normal'}
+                    </button>
+                  )}
+                </td>
                 <td className="px-6 py-4 text-right">
                   <div className="flex justify-end gap-2">
                     <button
                       onClick={() => onEdit(poster)}
                       className="p-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200"
+                      title="Modifier l'affiche"
                     >
                       <Edit2 size={16} />
                     </button>
                     <button
                       onClick={() => handleDelete(poster.id, poster.title)}
                       className="p-2 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-200"
+                      title="Supprimer l'affiche"
                     >
                       <Trash2 size={16} />
                     </button>

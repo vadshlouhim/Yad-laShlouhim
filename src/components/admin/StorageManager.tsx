@@ -78,14 +78,20 @@ export const StorageManager = () => {
 
       if (filesError) {
         console.error('❌ Erreur lors du chargement des fichiers:', filesError);
-        alert(`Erreur lors du chargement des fichiers: ${filesError.message}`);
+        console.warn(`Erreur lors du chargement des fichiers: ${filesError.message}`);
+        setFiles([]);
         return;
       }
 
       // Filtrer les fichiers pour ne garder que les images
       const imageFiles = (filesData || []).filter(file => {
+        // Ignorer les dossiers
+        if (!file.name || file.name.endsWith('/')) {
+          return false;
+        }
+        
         const isImage = file.metadata?.mimetype?.startsWith('image/') || 
-                       file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i);
+                       file.name.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i);
         console.log(`Fichier ${file.name}: isImage=${isImage}, mimetype=${file.metadata?.mimetype}`);
         return isImage;
       });

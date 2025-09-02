@@ -16,8 +16,9 @@ export interface Poster {
   currency: string;
   canva_link: string;
   is_published: boolean;
-  is_featured: boolean;
+  is_featured?: boolean;
   created_at: string;
+  updated_at?: string;
   category?: Category;
 }
 
