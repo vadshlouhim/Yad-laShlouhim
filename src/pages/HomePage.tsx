@@ -261,24 +261,24 @@ export const HomePage = () => {
 
   // Fonction pour obtenir l'icône et la couleur d'une catégorie
   const getCategoryIcon = (iconName: string, isSelected: boolean) => {
-    // Couleurs harmonieuses pour chaque catégorie
+    // Couleurs dégradées uniques pour chaque catégorie
     const colorPalettes = [
-      'bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 shadow-lg shadow-blue-500/30',
-      'bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-600 shadow-lg shadow-emerald-500/30', 
-      'bg-gradient-to-br from-purple-500 via-violet-500 to-fuchsia-600 shadow-lg shadow-purple-500/30',
-      'bg-gradient-to-br from-orange-500 via-red-500 to-pink-600 shadow-lg shadow-orange-500/30',
-      'bg-gradient-to-br from-pink-500 via-rose-500 to-red-600 shadow-lg shadow-pink-500/30',
-      'bg-gradient-to-br from-indigo-500 via-blue-500 to-purple-600 shadow-lg shadow-indigo-500/30',
-      'bg-gradient-to-br from-green-500 via-emerald-500 to-teal-600 shadow-lg shadow-green-500/30',
-      'bg-gradient-to-br from-yellow-500 via-orange-500 to-red-600 shadow-lg shadow-yellow-500/30',
-      'bg-gradient-to-br from-cyan-500 via-blue-500 to-indigo-600 shadow-lg shadow-cyan-500/30',
-      'bg-gradient-to-br from-red-500 via-pink-500 to-purple-600 shadow-lg shadow-red-500/30',
-      'bg-gradient-to-br from-violet-500 via-purple-500 to-indigo-600 shadow-lg shadow-violet-500/30',
-      'bg-gradient-to-br from-teal-500 via-cyan-500 to-blue-600 shadow-lg shadow-teal-500/30',
-      'bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 shadow-lg shadow-amber-500/30',
-      'bg-gradient-to-br from-lime-500 via-green-500 to-emerald-600 shadow-lg shadow-lime-500/30',
-      'bg-gradient-to-br from-fuchsia-500 via-pink-500 to-purple-600 shadow-lg shadow-fuchsia-500/30',
-      'bg-gradient-to-br from-slate-500 via-gray-500 to-slate-600 shadow-lg shadow-slate-500/30'
+      'bg-gradient-to-br from-pink-500 via-rose-500 to-purple-600 shadow-lg shadow-pink-500/40',
+      'bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 shadow-lg shadow-blue-500/40',
+      'bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-600 shadow-lg shadow-emerald-500/40',
+      'bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-600 shadow-lg shadow-orange-500/40',
+      'bg-gradient-to-br from-red-500 via-pink-500 to-rose-600 shadow-lg shadow-red-500/40',
+      'bg-gradient-to-br from-violet-500 via-purple-500 to-indigo-600 shadow-lg shadow-violet-500/40',
+      'bg-gradient-to-br from-green-500 via-lime-500 to-emerald-600 shadow-lg shadow-green-500/40',
+      'bg-gradient-to-br from-yellow-500 via-orange-500 to-red-500 shadow-lg shadow-yellow-500/40',
+      'bg-gradient-to-br from-cyan-500 via-sky-500 to-blue-600 shadow-lg shadow-cyan-500/40',
+      'bg-gradient-to-br from-purple-500 via-fuchsia-500 to-pink-600 shadow-lg shadow-purple-500/40',
+      'bg-gradient-to-br from-indigo-500 via-blue-500 to-cyan-600 shadow-lg shadow-indigo-500/40',
+      'bg-gradient-to-br from-teal-500 via-emerald-500 to-green-600 shadow-lg shadow-teal-500/40',
+      'bg-gradient-to-br from-amber-500 via-yellow-500 to-orange-600 shadow-lg shadow-amber-500/40',
+      'bg-gradient-to-br from-lime-500 via-green-500 to-teal-600 shadow-lg shadow-lime-500/40',
+      'bg-gradient-to-br from-fuchsia-500 via-pink-500 to-red-600 shadow-lg shadow-fuchsia-500/40',
+      'bg-gradient-to-br from-slate-500 via-gray-500 to-zinc-600 shadow-lg shadow-slate-500/40'
     ];
 
     // Icônes variées pour chaque catégorie
@@ -306,7 +306,7 @@ export const HomePage = () => {
     
     return {
       icon: categoryData.icon,
-      color: isSelected ? `${baseColor} scale-110 ring-4 ring-white/20` : `${baseColor} hover:scale-105 hover:shadow-xl`
+      color: isSelected ? `${baseColor} scale-110 ring-4 ring-white/30` : `${baseColor} hover:scale-105 hover:shadow-xl`
     };
   };
 
@@ -635,10 +635,10 @@ export const HomePage = () => {
                   >
                     <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center text-white shadow-lg transition-all duration-300 ${
                       !selectedCategory 
-                        ? 'bg-gradient-to-br from-purple-500 via-pink-500 to-indigo-600 shadow-xl scale-110' 
-                        : 'bg-gradient-to-br from-slate-400 via-gray-500 to-slate-600 hover:scale-105'
+                          ? 'bg-gradient-to-br from-purple-500 via-pink-500 to-indigo-600 shadow-xl shadow-purple-500/50 scale-110' 
+                          : 'bg-gradient-to-br from-slate-400 via-gray-500 to-slate-600 shadow-slate-500/40 hover:scale-105'
                     }`}>
-                      <Eye className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
+                      <Eye className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
                     </div>
                     <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 text-center max-w-16 sm:max-w-20">
                       Toutes
@@ -656,7 +656,7 @@ export const HomePage = () => {
                       onClick={() => setSelectedCategory(category.id)}
                     >
                       <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 ${color} rounded-full flex items-center justify-center text-white transition-all duration-300`}>
-                        <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
+                        <IconComponent className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
                       </div>
                       <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 text-center max-w-16 sm:max-w-20">
                         {category.name}
