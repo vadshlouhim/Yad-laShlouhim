@@ -145,7 +145,7 @@ serve(async (req) => {
       case 'UPLOAD_IMAGE':
         // Upload d'image via Service Role
         const { file, fileName } = data
-        const filePath = `affiches/${fileName}` // Organiser dans un sous-dossier
+        const filePath = fileName // Pas de sous-dossier pour éviter la duplication
         
         console.log('📤 Upload Edge Function:', { fileName, fileSize: file?.size })
         
