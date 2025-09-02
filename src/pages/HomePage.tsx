@@ -396,7 +396,6 @@ export const HomePage = () => {
                   <div className="w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full shadow-lg"></div>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 mt-4 text-lg">
-                  Découvrez nos créations les plus récentes
                 </p>
               </div>
 
