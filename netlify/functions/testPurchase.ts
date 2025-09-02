@@ -18,7 +18,7 @@ export const handler: Handler = async (event, context) => {
   }
 
   try {
-    console.log('🧪 Test de la fonction testPurchase');
+    console.log('🧪 Test de la fonction testPurchase - v2');
     
     // 1. Vérifier la connexion Supabase
     const { data: tables, error: tablesError } = await supabase
